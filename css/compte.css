@@ -1,4 +1,13 @@
-#bloc2, #bloc3 {
+#bloc2, #bloc3, #statusInfo, #formNewMessage {
     display: none;
 }
 
+.messageDestinataire {
+    color: pink;
+    text-align: left;
+}
+
+.messageUtilisateur {
+    color: blue;
+    text-align: right;
+}
