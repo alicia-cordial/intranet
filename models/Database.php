@@ -12,14 +12,14 @@ class Database
     {
         $this->username = "root";
         $this->hostname = "localhost";
-        $this->dbname = 'intranet';
+        $this->dbname = 'lbp';
         $this->connexionDb();
     }
 
     public function connexionDb()
     {
         try {
-            $this->pdo = new pdo("mysql:dbname=intranet;host=localhost;charset=UTF8", 'root', '');
+            $this->pdo = new pdo("mysql:dbname=lbp;host=localhost;charset=UTF8", 'root', '');
         } catch (Exception $e) {
             echo $e . "<br>";
         }

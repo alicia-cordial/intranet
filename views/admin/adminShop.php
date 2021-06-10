@@ -1,14 +1,11 @@
 <article>
-    <h3>UTILISATEURS</h3>
-    <!--    <p>Nombre d'inscrit.es : </p>-->
-    <div>
-        <p class="showUsers" value="">Tous</p>
-        <p class="showUsers" value="client" ">Client.es</p>
-        <p class="showUsers" value="vendeur">Vendeur.ses</p>
-    </div>
+    <h3>CATEGORIES / Gestion des articles</h3>
+    <button id="addNewCat">Ajouter une catégorie</button>
+    <div id="categoriesVides"><h4>Catégories vides</h4></div>
+    <div id="categories"><h4>Catégories avec articles</h4></div>
 </article>
 
-<article id="listeUsersTries">
+<article id="articlesTries">
 
 </article>
 

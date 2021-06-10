@@ -19,7 +19,7 @@ $(document).ready(function () {
         } else if ($(this).is('#navBoughtArticle')) {
             callSectionUser('clientArticlesAchetes')
             $.post(
-                'API/apiClient', {action: 'selectArticlesAchetes'},
+                'API/apiClient.php', {action: 'selectArticlesAchetes'},
                 function (data) {
                     let articles = JSON.parse(data);
                     console.log(data);
@@ -37,7 +37,7 @@ $(document).ready(function () {
         } else if ($(this).is('#navMessagerie')) {
             callSectionUser('messagerie')
             $.post(
-                'API/apiMessagerie', {action: 'selectContacts'},
+                'API/apiMessagerie.php', {action: 'selectContacts'},
                 function (data) {
                     let contacts = JSON.parse(data);
                     let contactList = $('#contacts')
@@ -47,6 +47,9 @@ $(document).ready(function () {
                     } else {
                         $.each(contacts, function (key, value) {
                             contactList.append("<p class='individualConversation' id='" + value.id + "'>" + value.identifiant + "</p>")
+                            if (value.status == 'supprimé') {
+                                $('#'+value.id).addClass('supprimé')
+                            }
                         })
                     }
                 }
@@ -60,11 +63,16 @@ $(document).ready(function () {
         // console.log(idDestinataire)
         let conversation = $('#conversation')
         conversation.empty()
+        if ($(this).is('.supprimé')) {
+            $('#formNewMessage').css('display', 'none')
+        } else {
+            $('#formNewMessage').css('display', 'block')
+        }
+        $('#formNewMessage').attr('value', idDestinataire)
         $.post(
-            'API/apiMessagerie', {action: 'showConversation', idDestinataire: idDestinataire},
+            'API/apiMessagerie.php', {action: 'showConversation', idDestinataire: idDestinataire},
             function (data) {
-                $('#formNewMessage').css('display', 'block')
-                $('#formNewMessage').attr('value', idDestinataire)
+
                 let messages = JSON.parse(data);
                 console.log(messages);
                 for (let message of messages) {
@@ -86,7 +94,7 @@ $(document).ready(function () {
         console.log(idDestinataire)
         console.log($('#newMessage').val())
         $.post(
-            'API/apiMessagerie', {
+            'API/apiMessagerie.php', {
                 action: 'sendNewMessage',
                 idDestinataire: idDestinataire,
                 messageContent: $('#newMessage').val()
@@ -106,7 +114,7 @@ $(document).ready(function () {
         $('#message').empty();
         event.preventDefault()
         $.post(
-            'API/apiModule', {
+            'API/apiModule.php', {
                 form: 'updateProfil',
                 status: $("input[name='status']:checked").val(),
                 login: $('#login').val(),
