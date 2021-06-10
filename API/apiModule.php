@@ -6,10 +6,9 @@ $model = new UserModel();
 
 /*VARIABLES INSCRIPTION/UPDATE*/
 if (isset($_POST['form']) && ($_POST['form'] === 'inscription' || $_POST['form'] === 'updateProfil')) {
-    if (!empty($_POST['status']) && !empty($_POST['login']) && !empty($_POST['zip']) && !empty($_POST['email']) && !empty($_POST['password']) && !empty($_POST['password2'])) {
+    if (!empty($_POST['status']) && !empty($_POST['login']) && !empty($_POST['email']) && !empty($_POST['password']) && !empty($_POST['password2'])) {
         $status = htmlspecialchars($_POST['status']);
         $login = htmlspecialchars($_POST['login']);
-        $zip = htmlspecialchars($_POST['zip']);
         $email = htmlspecialchars($_POST['email']);
         $password = htmlspecialchars($_POST['password']);
         $password2 = htmlspecialchars($_POST['password2']);
@@ -46,9 +45,9 @@ if (isset($_POST['form']) && ($_POST['form'] === 'inscription' || $_POST['form']
             $hashedpassword = password_hash($password, PASSWORD_BCRYPT);
 
             if ($_POST['form'] === 'inscription') {
-                $insert = $model->insertUser($status, $login, $zip, $email, $hashedpassword);
+                $insert = $model->insertUser($status, $login, $email, $hashedpassword);
             } else if ($_POST['form'] === 'updateProfil') {
-                $insert = $model->updateUser($status, $login, $zip, $email, $hashedpassword, $_SESSION['user']['id']);
+                $insert = $model->updateUser($status, $login, $email, $hashedpassword, $_SESSION['user']['id']);
                 if ($insert) {
                     $_SESSION['user'] = $model->selectUserData($_SESSION['user']['id']);
                 }

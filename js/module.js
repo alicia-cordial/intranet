@@ -11,7 +11,7 @@ $(document).ready(function() {
 
     /*INSCRIPTION*/
     //Display inscription blocks
-    $('body').on('click', 'input[name=status]', function() {
+    $('body').on('click', '#email', function() {
         $('#bloc2').css('display', 'block')
     });
     $('body').on('change', '#password2', function() {
@@ -25,12 +25,12 @@ $(document).ready(function() {
         $.post(
             'API/apiModule.php', {
                 form: 'inscription',
-                status: $("input[name='status']:checked").val(),
+                status: $('#status').val(),
                 login: $('#login').val(),
                 password: $('#password').val(),
                 password2: $('#password2').val(),
                 email: $('#email').val(),
-                zip: $('#zip').val()
+
             },
             function(data) {
                 console.log(data);

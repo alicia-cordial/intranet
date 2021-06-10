@@ -29,8 +29,7 @@
             <div>
                 <input type="email" id="email" name="email" placeholder="email"
                        value="<?= $_SESSION['user']['mail'] ?>">
-                <input type="text" pattern="[0-9]{5}" id="zip" name="zip" placeholder="code postal"
-                       value="<?= $_SESSION['user']['zip'] ?>">
+              
                 <button type="submit">Modifier vos informations</button>
             </div>
         </form>

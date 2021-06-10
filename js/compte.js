@@ -1,13 +1,13 @@
-$(document).ready(function () {
+$(document).ready(function() {
 
 
-    $('body').on('click', '.navUser', function () {
+    $('body').on('click', '.navUser', function() {
         $('#sectionVendeur').empty();
 
         //UPDATE PROFIL
         if ($(this).is('#navUpdateProfil')) {
             callSectionUser('updateProfile')
-            $('body').on('change', 'input[name="status"]', function () {
+            $('body').on('change', 'input[name="status"]', function() {
                 if (!$(this).hasClass('originalStatus')) {
                     $('#statusInfo').css('display', 'block')
                 } else {
@@ -19,8 +19,8 @@ $(document).ready(function () {
         } else if ($(this).is('#navBoughtArticle')) {
             callSectionUser('clientArticlesAchetes')
             $.post(
-                'API/apiClient.php', {action: 'selectArticlesAchetes'},
-                function (data) {
+                'API/apiClient.php', { action: 'selectArticlesAchetes' },
+                function(data) {
                     let articles = JSON.parse(data);
                     console.log(data);
                     if (articles == 'none') {
@@ -37,18 +37,18 @@ $(document).ready(function () {
         } else if ($(this).is('#navMessagerie')) {
             callSectionUser('messagerie')
             $.post(
-                'API/apiMessagerie.php', {action: 'selectContacts'},
-                function (data) {
+                'API/apiMessagerie.php', { action: 'selectContacts' },
+                function(data) {
                     let contacts = JSON.parse(data);
                     let contactList = $('#contacts')
                     console.log(data);
                     if (contacts == 'none') {
                         contactList.append("Aucune conversation");
                     } else {
-                        $.each(contacts, function (key, value) {
+                        $.each(contacts, function(key, value) {
                             contactList.append("<p class='individualConversation' id='" + value.id + "'>" + value.identifiant + "</p>")
                             if (value.status == 'supprimé') {
-                                $('#'+value.id).addClass('supprimé')
+                                $('#' + value.id).addClass('supprimé')
                             }
                         })
                     }
@@ -58,9 +58,9 @@ $(document).ready(function () {
     })
 
     //MESSAGERIE
-    $('body').on('click', '.individualConversation', function (event) {
+    $('body').on('click', '.individualConversation', function(event) {
         let idDestinataire = $(this).attr('id')
-        // console.log(idDestinataire)
+            // console.log(idDestinataire)
         let conversation = $('#conversation')
         conversation.empty()
         if ($(this).is('.supprimé')) {
@@ -70,8 +70,8 @@ $(document).ready(function () {
         }
         $('#formNewMessage').attr('value', idDestinataire)
         $.post(
-            'API/apiMessagerie.php', {action: 'showConversation', idDestinataire: idDestinataire},
-            function (data) {
+            'API/apiMessagerie.php', { action: 'showConversation', idDestinataire: idDestinataire },
+            function(data) {
 
                 let messages = JSON.parse(data);
                 console.log(messages);
@@ -87,7 +87,7 @@ $(document).ready(function () {
     })
 
     //NEW MESSAGE IN CONVERSATION
-    $('body').on('submit', '#formNewMessage', function (event) {
+    $('body').on('submit', '#formNewMessage', function(event) {
         let idDestinataire = $(this).attr('value')
         event.preventDefault()
         let conversation = $('#conversation')
@@ -99,7 +99,7 @@ $(document).ready(function () {
                 idDestinataire: idDestinataire,
                 messageContent: $('#newMessage').val()
             },
-            function (data) {
+            function(data) {
                 let message = JSON.parse(data);
                 $('#newMessage').val('')
                 console.log(data);
@@ -109,8 +109,8 @@ $(document).ready(function () {
     })
 
 
-//Formulaire modification profil
-    $('body').on('submit', '#formUpdateUser', function (event) {
+    //Formulaire modification profil
+    $('body').on('submit', '#formUpdateUser', function(event) {
         $('#message').empty();
         event.preventDefault()
         $.post(
@@ -121,16 +121,15 @@ $(document).ready(function () {
                 password: $('#password').val(),
                 password2: $('#password2').val(),
                 email: $('#email').val(),
-                zip: $('#zip').val()
             },
-            function (data) {
+            function(data) {
                 console.log(data);
                 let messages = JSON.parse(data);
                 for (let message of messages) {
                     if (message === "success") {
                         $("#message").append("<p>Modification du profil réussie !</p>");
                         setTimeout(
-                            function () {
+                            function() {
                                 $("#mainCompte").load(location.href + " #mainCompte")
                             }, 3000);
                     } else {
@@ -148,11 +147,7 @@ $(document).ready(function () {
 /*FUNCTIONS*/
 function callSectionUser(page) {
     $.get('views/user/' + page + '.php',
-        function (data) {
+        function(data) {
             $('#sectionVendeur').html(data);
         });
 }
-
-
-
-

@@ -45,7 +45,7 @@ if(isset($_GET['id'])){
             <td><?= $articles['signal'] ?></br><a id =" <?= $articles['id'] ?>" class='signalObjet' href='#ex2' rel='modal:open'>Signaler objet</a> </td>
             <td><?= $articles['nom']; ?></td>
             <td><a href='profilVendeur?id=<?= $articles['id']; ?>'><?= $articles['identifiant']; ?></a></td>
-            <td><?= $articles['zip']; ?></td>
+            <td><?= $articles['']; ?></td>
             <td><a id =" <?= $articles['id'] ?>" class='contactUser' href='#ex1' rel='modal:open'>Contacter le vendeur</a> </td>
     
           
