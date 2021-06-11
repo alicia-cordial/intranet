@@ -21,12 +21,10 @@ class Compte
         if (!isset($_SESSION['user'])) {
             require_once('views/user/connexion.php');
         } else {
-            if ($_SESSION['user']['droit'] === "1") {
-                header('Location: admin');
-            } else if ($_SESSION['user']['status'] === 'vendeur') {
-                require_once('views/user/vendeur.php');
-            } else if ($_SESSION['user']['status'] === 'client') {
-                require_once('views/user/client.php');
+             if ($_SESSION['user']['status'] === '0') {
+                require_once('views/user/userIndex.php');
+            } else if ($_SESSION['user']['status'] === '1') {
+                require_once('views/admin/adminIndex.php');
             }
         }
     }
