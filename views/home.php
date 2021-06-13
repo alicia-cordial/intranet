@@ -1,5 +1,4 @@
 <main>
-
-home
+<p>BIENVENUE SUR L INTRANET DE JACQUIOD ENT</p>
 </main>
 

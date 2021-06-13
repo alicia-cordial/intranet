@@ -15,24 +15,6 @@ $(document).ready(function() {
                 }
             })
 
-            //ARTICLES ACHETES
-        } else if ($(this).is('#navBoughtArticle')) {
-            callSectionUser('clientArticlesAchetes')
-            $.post(
-                'API/apiClient.php', { action: 'selectArticlesAchetes' },
-                function(data) {
-                    let articles = JSON.parse(data);
-                    console.log(data);
-                    if (articles == 'none') {
-                        $("#articlesAchetes").append("<tr><td>Il n'y a rien ici.</td></tr>");
-                    } else {
-                        for (let article of articles) {
-                            $('#articlesAchetes').append("<tr id = '" + article.id_article + "'><td>" + article.titre + "</td><td> Vendeur : <a href='profilVendeur?id=" + article.id_vendeur + "'>" + article.identifiant + "</a></td><td> Acheté le : " + article.date_vente + "</td><td><button class='supprimerArticle' >Supprimer</button></td></tr>");
-                        }
-                    }
-                }
-            );
-
             //MESSAGERIE
         } else if ($(this).is('#navMessagerie')) {
             callSectionUser('messagerie')
@@ -54,8 +36,49 @@ $(document).ready(function() {
                     }
                 }
             );
+        } else if ($(this).is('#navTdl')) {
+            callSectionUser('todolist')
+            $.post(
+                'API/apiTdl.php', { action: 'selectTdl' },
+                function(data) {
+                    let tdls = JSON.parse(data);
+                    let tdlList = $("#container_todo")
+                    console.log(data);
+                    if (tdls == 'none') {
+                        tdlList.append('Aucune tâche');
+
+                    } else {
+                        $.each(tdls, function(key, value) {
+                            tdlList.append("<p class='individualConversation' id='" + value.id + "'>" + value.titre + "</p>")
+                            if (value.status == 'supprimé') {
+                                $('#' + value.id).addClass('supprimé')
+                            }
+                        })
+                    }
+
+                }
+            );
         }
+
+
+
+
     })
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     //MESSAGERIE
     $('body').on('click', '.individualConversation', function(event) {
@@ -116,7 +139,6 @@ $(document).ready(function() {
         $.post(
             'API/apiModule.php', {
                 form: 'updateProfil',
-                status: $("input[name='status']:checked").val(),
                 login: $('#login').val(),
                 password: $('#password').val(),
                 password2: $('#password2').val(),
@@ -139,6 +161,8 @@ $(document).ready(function() {
             },
         );
     });
+
+
 
 
 })

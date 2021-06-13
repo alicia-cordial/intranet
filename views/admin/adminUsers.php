@@ -1,10 +1,10 @@
 <article>
     <h3>UTILISATEURS</h3>
-    <!--    <p>Nombre d'inscrit.es : </p>-->
+    <!--    <p >Nombre d'inscrit.es : </p>-->
     <div>
         <p class="showUsers" value="">Tous</p>
-        <p class="showUsers" value="client" ">Client.es</p>
-        <p class="showUsers" value="vendeur">Vendeur.ses</p>
+        <p class="showUsers" value="0">Client.es</p>
+        <p class="showUsers" value="1">Vendeur.ses</p>
     </div>
 </article>
 

@@ -1,6 +1,6 @@
-$(document).ready(function () {
+$(document).ready(function() {
     //
-    $('body').on('click', '.navAdmin', function () {
+    $('body').on('click', '.navAdmin', function() {
         $('#sectionAdmin').empty();
 
         if ($(this).is('#navAdminUsers')) {
@@ -8,15 +8,15 @@ $(document).ready(function () {
         } else if ($(this).is('#navAdminMessagerie')) {
             callSectionAdmin('adminMessagerie')
             $.post(
-                'API/apiMessagerie', {action: 'selectContacts'},
-                function (data) {
+                'API/apiMessagerie.php', { action: 'selectContacts' },
+                function(data) {
                     let contacts = JSON.parse(data);
                     let contactList = $('#contacts')
                     console.log(data);
                     if (contacts == 'none') {
                         contactList.append("Aucune conversation");
                     } else {
-                        $.each(contacts, function (key, value) {
+                        $.each(contacts, function(key, value) {
                             contactList.append("<p class='individualConversation' id='" + value.id + "'>" + value.identifiant + "</p>")
                         })
                     }
@@ -30,7 +30,7 @@ $(document).ready(function () {
                 'API/apiAdmin.php', {
                     action: 'selectCategories',
                 },
-                function (data) {
+                function(data) {
                     console.log(data);
                     let categories = JSON.parse(data);
                     if (categories === 'none') {
@@ -53,14 +53,14 @@ $(document).ready(function () {
     })
 
     //MESSAGERIE
-    $('body').on('click', '.individualConversation', function (event) {
+    $('body').on('click', '.individualConversation', function(event) {
         let idDestinataire = $(this).attr('id')
-        // console.log(idDestinataire)
+            // console.log(idDestinataire)
         let conversation = $('#conversation')
         conversation.empty()
         $.post(
-            'API/apiMessagerie', {action: 'showConversation', idDestinataire: idDestinataire},
-            function (data) {
+            'API/apiMessagerie.php', { action: 'showConversation', idDestinataire: idDestinataire },
+            function(data) {
                 $('#formNewMessage').css('display', 'block')
                 $('#formNewMessage').attr('value', idDestinataire)
                 let messages = JSON.parse(data);
@@ -77,7 +77,7 @@ $(document).ready(function () {
     })
 
     //NEW MESSAGE IN CONVERSATION
-    $('body').on('submit', '#formNewMessage', function (event) {
+    $('body').on('submit', '#formNewMessage', function(event) {
         let idDestinataire = $(this).attr('value')
         event.preventDefault()
         let conversation = $('#conversation')
@@ -89,7 +89,7 @@ $(document).ready(function () {
                 idDestinataire: idDestinataire,
                 messageContent: $('#newMessage').val()
             },
-            function (data) {
+            function(data) {
                 let message = JSON.parse(data);
                 $('#newMessage').val('')
                 console.log(data);
@@ -98,14 +98,14 @@ $(document).ready(function () {
         )
     })
 
-    $('body').on('click', '.rowCategorie', function () {
+    $('body').on('click', '.rowCategorie', function() {
         let row = $(this).parents('tr')
         let idCategory = row.attr('id');
         console.log(idCategory)
         $('#articlesTries').empty()
         $.post(
-            'API/apiAdmin.php', {action: 'showArticlesCategorie', idCategory: idCategory},
-            function (data) {
+            'API/apiAdmin.php', { action: 'showArticlesCategorie', idCategory: idCategory },
+            function(data) {
                 console.log(data);
                 let articles = JSON.parse(data);
                 for (let article of articles) {
@@ -116,21 +116,21 @@ $(document).ready(function () {
         )
     })
 
-    $('body').one('click', '.updateCat', function () {
+    $('body').one('click', '.updateCat', function() {
         let row = $(this).parents('tr')
         let idCategory = row.attr('id');
         let categoryName = row.attr('value');
         if ($('#newName').length == 0) {
             $(this).after("<input id='newName' value='" + categoryName + "'>")
         }
-        $('body').on('click', '.updateCat', function () {
+        $('body').on('click', '.updateCat', function() {
             $.post(
-                'API/apiAdmin', {action: 'updateCat', idCategory: idCategory, newName: $('#newName').val()},
-                function (data) {
+                'API/apiAdmin.php', { action: 'updateCat', idCategory: idCategory, newName: $('#newName').val() },
+                function(data) {
                     console.log(data);
                     $('#infoAdmin').html('<p>Nom de la catégorie updatée !</p>')
                     setTimeout(
-                        function () {
+                        function() {
                             $("#mainAdmin").load(location.href + " #mainAdmin")
                         }, 2000);
                 }
@@ -139,12 +139,12 @@ $(document).ready(function () {
     })
 
 
-    $('body').one('click', '.deleteCat', function () {
+    $('body').one('click', '.deleteCat', function() {
         let row = $(this).parents('tr')
         let idCategory = row.attr('id');
         $.post(
-            'API/apiAdmin.php', {action: 'deleteCat', id: idCategory},
-            function (data) {
+            'API/apiAdmin.php', { action: 'deleteCat', id: idCategory },
+            function(data) {
                 console.log(data);
                 let message = JSON.parse(data);
                 row.hide()
@@ -155,14 +155,14 @@ $(document).ready(function () {
     })
 
     //Button nouvelle catégorie
-    $('body').one('click', '#addNewCat', function () {
+    $('body').one('click', '#addNewCat', function() {
         if ($('#newCatName').length == 0) {
             $(this).after("<input id='newCatName'>")
         }
-        $('body').on('click', '#addNewCat', function () {
+        $('body').on('click', '#addNewCat', function() {
             $.post(
-                'API/apiAdmin.php', {action: 'addNewCat', name: $('#newCatName').val()},
-                function (data) {
+                'API/apiAdmin.php', { action: 'addNewCat', name: $('#newCatName').val() },
+                function(data) {
                     console.log(data);
                     let cat = JSON.parse(data);
                     $('#newCatName').empty()
@@ -174,16 +174,16 @@ $(document).ready(function () {
         })
     })
 
-    $('body').on('click', '.showUsers', function () {
+    $('body').on('click', '.showUsers', function() {
         let choice = $(this).attr('value');
         $('#listeUsersTries').empty()
         console.log(choice)
         $.post(
-            'API/apiAdmin', {
+            'API/apiAdmin.php', {
                 action: 'showUsers',
                 choice: choice
             },
-            function (data) {
+            function(data) {
                 console.log(data);
                 let users = JSON.parse(data);
                 if (users === 'none') {
@@ -202,16 +202,16 @@ $(document).ready(function () {
     })
 
     //BOUTON SUPPRIMER user
-    $('body').on('click', '.deleteUser', function () {
+    $('body').on('click', '.deleteUser', function() {
         let row = $(this).parents('tr')
         let idUser = row.attr('id')
         $('#infoAdmin').empty()
         $(this).html('<button id="confirmSupprUser">Êtes-vous sûr.e ? </button><button class="navAdmin">Non.</button>')
         $('#infoAdmin').append("<p>Si l'utilisateur est un vendeur, ses articles en vente seront aussi supprimés. Procéder avec prudence.</p>")
-        $('body').on('click', '#confirmSupprUser', function () {
+        $('body').on('click', '#confirmSupprUser', function() {
             $.post(
-                'API/apiAdmin.php', {action: 'deleteUser', id: idUser},
-                function (data) {
+                'API/apiAdmin.php', { action: 'deleteUser', id: idUser },
+                function(data) {
                     let message = JSON.parse(data);
                     row.hide()
                     $('#infoAdmin').html('<p>Utilisateur.ice supprimé.e.</p>')
@@ -223,13 +223,13 @@ $(document).ready(function () {
 
 
     //BOUTON CONTACT user
-    $('body').on('click', '.contactUser', function (event) {
+    $('body').on('click', '.contactUser', function(event) {
         $('#nameDestinataire').empty()
         let row = $(this).parents('tr')
         let idDestinataire = row.attr('id')
         let loginDestinataire = row.attr('value')
-        $('#nameDestinataire').append('<p>'+loginDestinataire+'</p>')
-        $('body').on('submit', '#newMessage', function (event) {
+        $('#nameDestinataire').append('<p>' + loginDestinataire + '</p>')
+        $('body').on('submit', '#newMessage', function(event) {
 
             console.log($('#newMessage input').val())
             event.preventDefault()
@@ -239,7 +239,7 @@ $(document).ready(function () {
                     idDestinataire: idDestinataire,
                     messageContent: $('#newMessage input').val()
                 },
-                function (data) {
+                function(data) {
                     let message = JSON.parse(data);
                     console.log(data);
                     $('#infoMessage').append("<p>Message envoyé !</p>")
@@ -250,7 +250,7 @@ $(document).ready(function () {
 
 
     //MODERATION
-    $('body').on('click', '.showModeration', function () {
+    $('body').on('click', '.showModeration', function() {
         let choice = $(this).attr('value');
         $('#moderationTriees').empty()
         console.log(choice)
@@ -259,7 +259,7 @@ $(document).ready(function () {
                 action: 'showModeration',
                 choice: choice
             },
-            function (data) {
+            function(data) {
                 console.log(data);
                 let articles = JSON.parse(data);
                 if (articles === 'none') {
@@ -280,16 +280,16 @@ $(document).ready(function () {
 
 
     /*SUPPRIMER UN ARTICLE*/
-    $('body').on('click', '.deleteArticle', function () {
+    $('body').on('click', '.deleteArticle', function() {
         let row = $(this).parents('tr')
         let idArticle = row.attr('id')
         $('#infoAdmin').empty()
         console.log(idArticle)
         $(this).html('<button id="confirmSupprArticle">Êtes-vous sûr.e ? </button><button class="navAdmin">Non.</button>')
-        $('body').on('click', '#confirmSupprArticle', function () {
+        $('body').on('click', '#confirmSupprArticle', function() {
             $.post(
-                'API/apiAdmin.php', {action: 'deleteArticle', id: idArticle},
-                function (data) {
+                'API/apiAdmin.php', { action: 'deleteArticle', id: idArticle },
+                function(data) {
                     let message = JSON.parse(data);
                     row.hide()
                     $('#infoAdmin').html('<p>Article supprimé.</p>')
@@ -299,7 +299,7 @@ $(document).ready(function () {
     })
 
     //ACCEPTER UN ARTICLE AVEC CREATION D'UNE NOUVELLE CATEGORIE
-    $('body').on('click', '.acceptArticleNewCat', function () {
+    $('body').on('click', '.acceptArticleNewCat', function() {
         let row = $(this).parents('tr')
         let idArticle = row.attr('id')
         let categoryName = row.find('input').val()
@@ -313,7 +313,7 @@ $(document).ready(function () {
                 categoryName: categoryName,
                 idVendeur: idVendeur
             },
-            function (data) {
+            function(data) {
                 let result = JSON.parse(data);
                 if (result === "fail") {
                     $('#infoAdmin').html("<p>Un problème est survenu.</p>")
@@ -327,14 +327,14 @@ $(document).ready(function () {
 
 
     //ACCEPTER UN ARTICLE SIGNALE
-    $('body').on('click', '.acceptArticleSignal', function () {
+    $('body').on('click', '.acceptArticleSignal', function() {
         let row = $(this).parents('tr')
         let idArticle = row.attr('id')
         console.log(idArticle)
         $('#infoAdmin').empty()
         $.post(
-            'API/apiAdmin.php', {action: 'acceptArticleSignal', id: idArticle},
-            function (data) {
+            'API/apiAdmin.php', { action: 'acceptArticleSignal', id: idArticle },
+            function(data) {
                 let result = JSON.parse(data);
                 if (result === "fail") {
                     $('#infoAdmin').html("<p>Un problème est survenu.</p>")
@@ -350,9 +350,7 @@ $(document).ready(function () {
 /*FUNCTIONS*/
 function callSectionAdmin(page) {
     $.get('views/admin/' + page + '.php',
-        function (data) {
+        function(data) {
             $('#sectionAdmin').html(data);
         });
 }
-
-

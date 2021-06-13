@@ -35,22 +35,20 @@ class UserModel extends Database
         return $userExists;
     }
 
-    public function insertUser($status, $login, $email, $hashedpassword)
+    public function insertUser($login, $email, $hashedpassword)
     {
-        $request = $this->pdo->prepare("INSERT INTO utilisateur (identifiant, mdp, mail, status) VALUES (:identifiant, :password, :email, :status)");
+        $request = $this->pdo->prepare("INSERT INTO utilisateur (identifiant, mdp, mail) VALUES (:identifiant, :password, :email)");
         $insert = $request->execute(array(
-            ':status' => $status,
             ':email' => $email,
             ':password' => $hashedpassword,
             ':identifiant' => $login
         ));
         return $insert;
     }
-    public function updateUser($status, $login, $email, $hashedpassword, $id)
+    public function updateUser($login, $email, $hashedpassword, $id)
     {
-        $request = $this->pdo->prepare("UPDATE utilisateur SET identifiant = :identifiant, mdp = :password, mail = :email, status = :status WHERE id = $id ");
+        $request = $this->pdo->prepare("UPDATE utilisateur SET identifiant = :identifiant, mdp = :password, mail = :email WHERE id = $id ");
         $update = $request->execute(array(
-            ':status' => $status,
             ':email' => $email,
             ':password' => $hashedpassword,
             ':identifiant' => $login
@@ -91,6 +89,31 @@ class UserModel extends Database
         $message = $request3->fetch(PDO::FETCH_ASSOC);
         return $message;
     }
+
+    public function selectTdl($_id){
+
+    $req = $this->pdo->prepare("SELECT * FROM tasks WHERE id = ?");
+    $req->execute();
+    $tdls = $req->fetchAll(PDO::FETCH_ASSOC);
+        return $tdls;
+
+    }
+
+  public function lister_taches_en_cours() {
+    $requete = $this->db->prepare("SELECT * FROM tasks WHERE id IN (SELECT task_id FROM jonction WHERE user_id = ?) AND finish = 0");
+    $requete->execute([$this->id]);
+
+    return $requete->fetchAll();
+
+  }
+
+  public function lister_taches_finies() {
+    $requete = $this->db->prepare("SELECT * FROM tasks WHERE id IN (SELECT task_id FROM jonction WHERE user_id = ?) AND finish = 1");
+    $requete->execute([$this->id]);
+
+    return $requete->fetchAll();
+
+  }
 }
 
 //////

@@ -25,7 +25,6 @@ $(document).ready(function() {
         $.post(
             'API/apiModule.php', {
                 form: 'inscription',
-                status: $('#status').val(),
                 login: $('#login').val(),
                 password: $('#password').val(),
                 password2: $('#password2').val(),

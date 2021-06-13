@@ -6,7 +6,7 @@
         <form id="formInscription">
             <div class="formBloc" id="bloc1">
                 <p>Vous êtes...</p>
-                <input type="text" name="status" value="0">
+                
                 <input type="text" id="login" name="login" placeholder="identifiant">
                 <input type="email" id="email" name="email" placeholder="email">
             </div>
