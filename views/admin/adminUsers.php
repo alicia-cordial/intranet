@@ -3,8 +3,6 @@
     <!--    <p >Nombre d'inscrit.es : </p>-->
     <div>
         <p class="showUsers" value="">Tous</p>
-        <p class="showUsers" value="0">Client.es</p>
-        <p class="showUsers" value="1">Vendeur.ses</p>
     </div>
 </article>
 

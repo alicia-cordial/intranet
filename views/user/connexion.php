@@ -18,5 +18,5 @@
             <div id="message"></div>
         </div>
     </article>
-    <p>Vous n'avez pas encore de compte ? <span class="callForm" id="callFormInscription">Inscrivez-vous.</span></p>
+ 
 </main>

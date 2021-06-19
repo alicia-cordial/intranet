@@ -26,5 +26,5 @@
             <div id="message"></div>
         </div>
     </article>
-    <p>Vous avez déjà un compte ? <span class="callForm" >Connectez-vous.</span></p>
+  
 </main>

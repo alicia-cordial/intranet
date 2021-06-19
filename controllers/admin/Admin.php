@@ -7,7 +7,7 @@ class Admin
     {
         $title = "Admin";
         $css = "admin.css";
-        $js = ["admin.js"];
+        $js = ["admin.js", "module.js"];
         ob_start();
         require_once('views/admin/adminIndex.php');
         $main = ob_get_clean();
