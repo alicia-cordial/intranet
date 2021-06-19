@@ -7,7 +7,7 @@ class Compte
     {
         $title = "Compte";
         $css = "compte.css";
-        $js = ['module.js', 'compte.js'];
+    $js = ['module.js', 'compte.js'];
         ob_start();
         $this->selectMain();
         $main = ob_get_clean();
@@ -27,5 +27,8 @@ class Compte
                 require_once('views/admin/adminIndex.php');
             }
         }
+     
     }
+
+
 }

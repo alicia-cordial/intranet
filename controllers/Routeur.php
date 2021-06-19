@@ -7,7 +7,6 @@ class Routeur
     private $controllers = [
         "home" => "Home",
         "compte" => "Compte",
-        "profilVendeur" => "ProfilVendeur",
         "admin" => "Admin",
         
     ];

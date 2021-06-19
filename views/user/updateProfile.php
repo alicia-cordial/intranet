@@ -3,6 +3,7 @@
     <article id="articleForm">
         <h3>VOTRE PROFIL</h3>
         <h4>IDENTIFIANT : <?= $_SESSION['user']['identifiant'] ?></h4>
+        <h4>IDENTIFIANT : <?= $_SESSION['user']['status'] ?></h4>
   
         <form id="formUpdateUser">
             <div>

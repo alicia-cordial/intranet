@@ -27,19 +27,18 @@ $(document).ready(function() {
                     if (contacts == 'none') {
                         contactList.append("Aucune conversation");
                     } else {
-                        $.each(contacts, function(key, value) {
-                            contactList.append("<p class='individualConversation' id='" + value.id + "'>" + value.identifiant + "</p>")
-                            if (value.status == 'supprimé') {
-                                $('#' + value.id).addClass('supprimé')
-                            }
-                        })
+                        for (let contact of contacts) {
+
+                        }
                     }
                 }
             );
-        } else if ($(this).is('#navTdl')) {
-            callSectionUser('todolist')
+
+            // TO DO LIST
+        } else if ($(this).is('#navTdl')) { // lien correspondant
+            callSectionUser('todolist') //page views
             $.post(
-                'API/apiTdl.php', { action: 'selectTdl' },
+                'API/apiTodo.php', { action: 'showTache' }, //lien ac API
                 function(data) {
                     let tdls = JSON.parse(data);
                     let tdlList = $("#container_todo")
@@ -49,12 +48,11 @@ $(document).ready(function() {
 
                     } else {
                         $.each(tdls, function(key, value) {
-                            tdlList.append("<p class='individualConversation' id='" + value.id + "'>" + value.titre + "</p>")
-                            if (value.status == 'supprimé') {
-                                $('#' + value.id).addClass('supprimé')
-                            }
+                            tdlList.append("<p class='individualTache' id='" + value.id + "'>" + value.titre + value.date_debut + value.termine + "</p>");
                         })
+
                     }
+
 
                 }
             );
@@ -69,67 +67,6 @@ $(document).ready(function() {
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-    //MESSAGERIE
-    $('body').on('click', '.individualConversation', function(event) {
-        let idDestinataire = $(this).attr('id')
-            // console.log(idDestinataire)
-        let conversation = $('#conversation')
-        conversation.empty()
-        if ($(this).is('.supprimé')) {
-            $('#formNewMessage').css('display', 'none')
-        } else {
-            $('#formNewMessage').css('display', 'block')
-        }
-        $('#formNewMessage').attr('value', idDestinataire)
-        $.post(
-            'API/apiMessagerie.php', { action: 'showConversation', idDestinataire: idDestinataire },
-            function(data) {
-
-                let messages = JSON.parse(data);
-                console.log(messages);
-                for (let message of messages) {
-                    conversation.append("<p id='message" + message.id + "'>Envoyé le : " + message.date + " - " + message.contenu + "</p>")
-                    if (message.id_expediteur == idDestinataire) {
-                        $('#message' + message.id).addClass('messageDestinataire')
-                    } else {
-                        $('#message' + message.id).addClass('messageUtilisateur')
-                    }
-                }
-            })
-    })
-
-    //NEW MESSAGE IN CONVERSATION
-    $('body').on('submit', '#formNewMessage', function(event) {
-        let idDestinataire = $(this).attr('value')
-        event.preventDefault()
-        let conversation = $('#conversation')
-        console.log(idDestinataire)
-        console.log($('#newMessage').val())
-        $.post(
-            'API/apiMessagerie.php', {
-                action: 'sendNewMessage',
-                idDestinataire: idDestinataire,
-                messageContent: $('#newMessage').val()
-            },
-            function(data) {
-                let message = JSON.parse(data);
-                $('#newMessage').val('')
-                console.log(data);
-                conversation.append("<p id='message" + message.id + "' class='messageUtilisateur'>Envoyé le : " + message.date + " - " + message.contenu + "</p>")
-            }
-        )
-    })
 
 
     //Formulaire modification profil
@@ -162,11 +99,95 @@ $(document).ready(function() {
         );
     });
 
-
-
-
 })
 
+/*
+if ($(this).is('#navTdl')) {
+    callSectionAdmin('todolist')
+    $.post(
+        'API/apiTodo.php', {
+            action: 'showTache',
+        },
+        function(data) {
+            console.log(data);
+            let taches = JSON.parse(data);
+            if (taches === 'none') {
+                $('#taches').append("<p>Rien</p>")
+            } else {
+                for (let ta of taches) {
+                    if ($('#' + ta.id).length === 0) {
+                        if (ta.titre) {
+                            $('#taches').append("<tr value='" + ta.titre + "' id='" + ta.id + "'><td><td class='rowTache'>" + ta.titre + "</td><td><button class='updateTache'>Modifier le titre</button></td></tr>")
+                        }
+                    }
+                }
+            }
+        }
+    )
+
+}
+
+
+//update tache
+
+$('body').one('click', '.updateTache', function() {
+    let row = $(this).parents('tr')
+    let idTache = row.attr('id');
+    let tacheName = row.attr('value');
+    if ($('#newName').length == 0) {
+        $(this).after("<input id='newName' value='" + tacheName + "'>")
+    }
+    $('body').on('click', '.updateTache', function() {
+        $.post(
+            'API/apiTodo', { action: 'updateTache', idTache: idTache, newName: $('#newName').val() },
+            function(data) {
+                console.log(data);
+                $('#infoAdmin').html('<p>Nom de la tache updatée !</p>')
+                setTimeout(
+                    function() {
+                        $("#sectionVendeur").load(location.href + " #sectionVendeur")
+                    }, 2000);
+            }
+        )
+    })
+})
+
+//delete tache
+
+$('body').one('click', '.deleteTache', function() {
+    let row = $(this).parents('tr')
+    let idTache = row.attr('id');
+    $.post(
+        'API/apiTodo.php', { action: 'deleteTache', id: idTache },
+        function(data) {
+            console.log(data);
+            let message = JSON.parse(data);
+            row.hide()
+            $('#infoAdmin').html('<p>Tache supprimée.</p>')
+
+        }
+    )
+})
+
+//Button nouvelle tache
+$('body').one('click', '#addNewTache', function() {
+    if ($('#newTacheName').length == 0) {
+        $(this).after("<input id='newTacheName'>")
+    }
+    $('body').on('click', '#addNewTache', function() {
+        $.post(
+            'API/apiTodo.php', { action: 'addNewTache', titre: $('#newTacheName').val() },
+            function(data) {
+                console.log(data);
+                let tache = JSON.parse(data);
+                $('#newTacheName').empty()
+                $('#tachesVides').append("<tr value='" + tache.titre + "' id='" + tache.id + "'><td><td class='rowTache'>" + tache.titre + "</td><td><button class='deleteTache'>Supprimer la tache</button></td></tr>")
+                $('#infoAdmin').html('<p>Catégorie créée.</p>')
+
+            }
+        )
+    })
+})*/
 
 /*FUNCTIONS*/
 function callSectionUser(page) {

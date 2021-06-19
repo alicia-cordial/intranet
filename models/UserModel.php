@@ -57,71 +57,88 @@ class UserModel extends Database
     }
 
 
+  
+    public function addMessage($contenu, $id_utilisateur){
+     
+    
+        $newMessage = $this->pdo->prepare("INSERT INTO `message`(contenu, id_utilisateur) VALUES (:contenu, :id_utilisateur)");
+        $new = $newMessage->execute(array(
+                'contenu' => $contenu,
+                'id_utilisateur' => $id_utilisateur,
+            ));
 
-
-    public function selectContacts($id)
-    {
-        $request = $this->pdo->prepare("SELECT DISTINCT utilisateur.identifiant, utilisateur.id, utilisateur.status FROM utilisateur JOIN message INNER JOIN utilisateur_message on utilisateur_message.id_message = message.id WHERE (id_expediteur = $id AND id_destinataire = utilisateur.id) OR (id_destinataire = $id AND id_expediteur = utilisateur.id) AND droit = 0 AND utilisateur.id != $id");
-        $request->execute();
-        $contacts = $request->fetchAll(PDO::FETCH_ASSOC);
-        return $contacts;
+        return $new;
     }
 
 
-    public function selectMessagesConversation($idDestinataire, $idUser)
+
+    public function selectMessagesConversation()
     {
-        $request = $this->pdo->prepare("SELECT * FROM message as m INNER JOIN utilisateur_message as um on id_message = m.id WHERE (id_expediteur = $idDestinataire AND id_destinataire = $idUser) OR (id_expediteur = $idUser AND id_destinataire = $idDestinataire)");
+        $request = $this->pdo->prepare("SELECT `date`, identifiant, contenu FROM `message` INNER JOIN utilisateur ON utilisateur.id = message.id_utilisateur ORDER BY `date` ASC LIMIT 100");
         $request->execute();
         $messages = $request->fetchAll(PDO::FETCH_ASSOC);
         return $messages;
     }
 
 
-    public function sendNewMessage($idDestinataire, $idUser, $messageContent)
+//ajouter tâche
+
+    public function createNewTache($tacheName, $idUser)
     {
-        $request = $this->pdo->prepare("INSERT into message (id_expediteur, contenu) VALUES (?, ?)");
-        $request->execute([$idUser, $messageContent]);
-        $idMessage = $this->pdo->lastInsertId();
-        $request2 = $this->pdo->prepare("INSERT into utilisateur_message (id_destinataire, id_message) VALUES (?, ?)");
-        $request2->execute([$idDestinataire, $idMessage]);
-        $request3 = $this->pdo->prepare("SELECT * FROM message WHERE id = $idMessage");
-        $request3->execute();
-        $message = $request3->fetch(PDO::FETCH_ASSOC);
-        return $message;
+        $request = $this->pdo->prepare("INSERT INTO todolist (titre, id_utilisateur) VALUES (?, ?)");
+        $request->execute([$tacheName, $idUser]);
+        $idTache = $this->pdo->lastInsertId();
+
+        $request2 = $this->pdo->prepare("INSERT INTO utilisateur_todolist (id_utilisateur, id_todolist) VALUES(LAST_INSERT_ID(), ?)");
+        $request2->execute([$_SESSION["user"]['id']]);
+
+        return ['id' => $idTache, 'id_utilisateur' => $idUser, 'titre' => $tacheName];
     }
 
-    public function selectTdl($_id){
+//afficher tâches
 
-    $req = $this->pdo->prepare("SELECT * FROM tasks WHERE id = ?");
+public function showTache($id){
+    $req = $this->pdo->prepare("SELECT * FROM todolist INNER JOIN utilisateur ON utilisateur.id = todolist.id_utilisateur WHERE utilisateur.id = $id ");
     $req->execute();
-    $tdls = $req->fetchAll(PDO::FETCH_ASSOC);
-        return $tdls;
+    $allTaches = $req->fetchAll(PDO::FETCH_ASSOC);
 
-    }
-
-  public function lister_taches_en_cours() {
-    $requete = $this->db->prepare("SELECT * FROM tasks WHERE id IN (SELECT task_id FROM jonction WHERE user_id = ?) AND finish = 0");
-    $requete->execute([$this->id]);
-
-    return $requete->fetchAll();
-
-  }
-
-  public function lister_taches_finies() {
-    $requete = $this->db->prepare("SELECT * FROM tasks WHERE id IN (SELECT task_id FROM jonction WHERE user_id = ?) AND finish = 1");
-    $requete->execute([$this->id]);
-
-    return $requete->fetchAll();
-
-  }
+    return $allTaches;
 }
 
+
+
+//update tâche 
+
+
+public function updateTache($idTache, $newName)
+{
+    $request = $this->pdo->prepare("UPDATE todolist SET titre = ? WHERE id = ?");
+    $request->execute([$newName, $idTache]);
+    return true;
+}
+
+
+// delete tache
+
+
+public function deleteTache($id){
+    $request = $this->pdo->prepare("DELETE todolist, utilisateur_todolist from todolist INNER JOIN utilisateur_todolist on todolist.id = utilisateur_todolist.id_todolist WHERE todolist.id = $id"); 
+    $request->execute(['id']);
+    return true;
+}
+
+
+
+
+}
 //////
 //$model = new UserModel();
-////var_dump($model->selectContacts('4'));
+//var_dump($model->addMessage('HELP', '1'));
 //
-////var_dump($model->sendNewMessage('4', '1', 'lala'));
-////var_dump($model->selectMessagesConversation('4', '1'));
+//var_dump($model->sendNewMessage('4', '3', 'lala'));
+
+//var_dump($model->selectMessagesConversation());
+
 //////var_dump($model->selectMessagesConversation('2', '1'));
 ////$userExists = $model->userExists('may5', 'may5');
 ////var_dump($userExists);
