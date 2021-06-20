@@ -1,192 +1,199 @@
 $(document).ready(function() {
+    $('#archiveList').hide();
 
-    /*NAVIGATION*/
-    $('body').on('click', '.navTodo', function() {
-        $('#sectionTodo').empty();
-
-        //Articles en vente
-        if ($(this).is('#navTachesCours')) {
-            callSectionUser('userTacheEnCours')
-            $.post(
-                'API/apiTodo.php', { action: 'tachesCours' },
-                function(data) {
-                    let taches = JSON.parse(data);
-                    console.log(taches)
-                    if (taches == 'none') {
-                        $("#tachesCours").append("<tr><td>Il n'y a rien ici.</td><td class='navTodo navNewTodo'> + Ajouter une tâche </td></tr>");
-                    } else {
-                        for (let tache of taches) {
-                            $('#tachesCours').append("<tr id ='" + tache.id_tache + "'>" + tache.titre + "</a></td><td>Tache créee le : " + tache.date_debut + "</td><td><button class='afficherDetails' >Modifier</button></td><td><button class='supprimerTache' >Supprimer</button></td></tr>");
-                        }
-
+    /*AJOUT TACHE*/
+    $('.addTask').click(function(e) {
+        e.preventDefault();
+        $.post(
+            'API/apiTodo.php', {
+                action: "createTask",
+                userId: $('#userId').val(),
+                titleTask: $('#titleTask').val()
+            },
+            function(idTask) {
+                $.post(
+                    'API/apiTodo.php', {
+                        action: "displayTask",
+                        idTask: idTask
+                    },
+                    function(result) {
+                        let data = JSON.parse(result);
+                        $('#toDoList').append("<li class='liTask' id='" + data.id + "'>" +
+                            "<input class='liTaskTitle' readOnly='readonly' value='" + data.title + "'</li>");
+                        $('#titleTask').val('');
                     }
-                })
+                )
+            },
+            'json'
+        )
+    });
 
-            //Créer nouvelle annonce
-        } else if ($(this).is('.navNewTache')) {
+    /*AFFICHAGE DETAILS D'UNE TACHE*/
+    $('body').on('click', '.liTask', function() {
+        let idTask = this.id;
+        let thisLi = this;
+
+        /*Affiche le bouton pour archiver*/
+        if ($(thisLi).children(".divClose").length === 0 && $(thisLi).parents('#archiveList').length === 0) {
+            $('li').children('.divClose').fadeOut(200, function() {
+                $(this).remove();
+            });
+            $('<div class="divClose"><button class="liTaskArchive">Archiver x</button></div>').hide().prependTo($(thisLi)).fadeIn(200);
+        }
+
+        //Ferme le détail de l'ancienne tache active
+        if ($(thisLi).parents('.listAFaire').length && $(thisLi).children('.modal').length === 0) {
+            $('li').children('.modal').fadeOut(200, function() {
+                $(this).remove();
+            });
+            $('li').children('.liTaskTitle').attr("readonly", true);
+            $('li').children('.liTaskTitle').css('cursor', 'default');
+
+            //récupère détails de la tache et l'affiche
             $.post(
-                'API/apiTodo.php', { action: 'afficherNewTache' },
-                function(data) {
-                    if (data === 'maximum') {
-                        $('#sectionVendeur').html('Vous avez atteint le maximum d\'annonces en ligne.');
-                    } else {
-                        $('#sectionVendeur').html(data);
-                    }
-
-                })
-
-            //Historique de vente
-        } else if ($(this).is('#navSoldArticle')) {
-            callSectionUser('vendeurArticlesVendus')
-            console.log($(this))
-            $.post(
-                'API/apiVendeur.php', { action: 'articlesSold' },
-                function(data) {
-                    let articles = JSON.parse(data);
-                    console.log(data);
-                    if (articles == 'none') {
-                        $("#articlesVendus").append("<tr><td>Il n'y a rien ici.</td></tr>");
-                    } else {
-                        for (let article of articles) {
-                            $('#articlesVendus').append("<tr id = '" + article.id_article + "'><td>" + article.titre + "</td><td> Acheté par : " + article.identifiant + "</td><td> Vendu le : " + article.date_vente + "</td><td><button class='supprimerArticle' >Supprimer</button></td></tr>");
-                        }
-                    }
+                'API/apiTodo.php', {
+                    action: "displayTask",
+                    idTask: idTask
+                },
+                function(result) {
+                    let data = JSON.parse(result);
+                    let date = new Date(data.start);
+                    let options = [{ day: 'numeric' }, { month: 'short' }, { year: 'numeric' }];
+                    date = date.toLocaleDateString('en-Us', options);
+                    $("<div class='modal'>" +
+                        "<div><span>Création : " + date + "</span><input  title='marquer comme terminée' type='checkbox' class='liTaskFinish'></div>" +
+                        "<div><textarea class='liTaskDesc' placeholder='description'>" + data.description + "</textarea>" +
+                        "<button class='addDescription'>Sauvegarder</button></div>" +
+                        "</div>").hide().appendTo($(thisLi)).fadeIn(200);
                 });
         }
     });
 
-    /*Submit New Article*/
-    //Suggérer une nouvelle catégorie
-    $('body').on('click', 'select[name="categorie"] option', function(event) {
-        if ($(this).is('#autreCat')) {
-            if ($('#infoCat').length === 0) {
-                $('<input id="catSuggeree" placeholder="categorie suggérée">').insertAfter('select[name="categorie"]')
-                $("#message").append("<p id='infoCat'>La création d'une nouvelle catégorie envoie votre article en modération</p>");
-            }
-        } else {
-            $('#catSuggeree').remove()
-            $('#infoCat').remove()
-        }
-    })
 
-    /*Formulaire New Article*/
-    $('body').on('submit', '#formNewArticle', function(event) {
-        event.preventDefault()
+    /*UPDATE TITRE*/
+    // clique sur le titre pour pouvoir le modifier
+    $('body').on('click', '#toDoList .liTaskTitle', function() {
+        let liTask = $(this).parents('li');
+        if (liTask.children('.modal').length >= 1) {
+            $(this).attr("readonly", false);
+            $(this).css('cursor', 'text');
+        }
+    });
+    // change valeur si nouvelle valeur est pas vide
+    $('body').on('focusin', '.liTaskTitle', function() {
+        $(this).data('val', $(this).val());
+    }).on('change', '.liTaskTitle', function() {
+        let oldTitle = $(this).data('val');
+        let newTitle = $(this).val();
+        if (newTitle.length >= 1) {
+            let idTask = $(this).parents('li').attr('id');
+            $.post(
+                'API/apiTodo.php', {
+                    action: "updateTitle",
+                    idTask: idTask,
+                    newTitle: newTitle
+                },
+                function(result) {
+                    $(this).val(newTitle);
+                });
+        } else {
+            $(this).val(oldTitle);
+        }
+    });
+
+
+    /*AJOUT DESCRIPTION*/
+    $('body').on('click', '.addDescription', function() {
+        let liTask = $(this).parents('li');
+        let idTask = $(this).parents('li').attr('id');
+        let textarea = $(liTask).find('.liTaskDesc');
+        let description = $(liTask).find('.liTaskDesc').val();
         $.post(
-            'API/apiVendeur.php', {
-                form: 'newArticle',
-                titre: $('#titre').val(),
-                description: $('#description').val(),
-                prix: $('#prix').val(),
-                etat: $('select[name="etat"] option:selected').val(),
-                categorie: $('select[name="categorie"] option:selected').val(),
-                negociation: $('#negociation input:checked').val(),
-                catSuggeree: $('#catSuggeree').val()
+            'API/apiTodo.php', {
+                action: "addDescription",
+                idTask: idTask,
+                description: description
             },
-            function(data) {
-                $('#message').empty();
-                console.log(data);
-                let message = JSON.parse(data);
-                if (message === "success") {
-                    $('#formNewArticle').empty();
-                    $("#message").append("<p>Annonce créée !</p>");
-                } else if (message === "moderation") {
-                    $("#message").append("<p>Annonce en modération. Veuillez attendre 48 heures avant de contacter un.e administrateur.ice.</p>");
-                } else {
-                    $('#message').append("<p>" + message + "</p>");
-                }
+            function(result) {
+                $(textarea).text(description);
             });
     });
 
-    /*BOUTONS D'ACTION*/
-    //Supprimer article de la bdd
-    $('body').on('click', '.supprimerArticle', function() {
-        let row = $(this).parents('tr')
-        let idArticle = row.attr('id')
-        $(this).html('<button id="confirmSupprArticle">Êtes-vous sûr.e ? </button><button class="navUser">Non.</button>')
-        $('body').on('click', '#confirmSupprArticle', function() {
-            $.post(
-                'API/apiVendeur.php', { action: 'supprimerArticle', id: idArticle },
-                function(data) {
-                    let message = JSON.parse(data);
-                    row.hide()
-                    console.log(message)
-                },
-            );
-        });
-    });
 
-    //Quand un acheteur est sélectionné, append le bouton confirmer
-    $('body').on('click', '.marquerCommeVendu option:selected', function() {
-        if (($('option:selected').val().length > 0 && $('#confirmerVente').length === 0)) {
-            $('<button id ="confirmerVente">Confirmer la vente</button>').insertAfter('.marquerCommeVendu')
-        } else if ($('option:selected').val().length === 0) {
-            $('#confirmerVente').remove()
-        }
-    });
-
-    //Marquer comme vendu
-    $('body').on('click', '#confirmerVente', function() {
-        let row = $(this).parents('tr')
-        let idArticle = row.attr('id')
-        if ($('option:selected').val().length > 0) {
-            $.post(
-                'API/apiVendeur', {
-                    action: 'marquerCommeVendu',
-                    idArticle: idArticle,
-                    idAcheteur: $('option:selected').val()
-                },
-                function(data) {
-                    let message = JSON.parse(data);
-                    row.hide()
-                    console.log(message)
-                }
-            );
-        }
-    });
-
-    //Afficher formulaire modification article
-    $('body').on('click', '.afficherDetails', function() {
-        $('#detailsArticles').empty()
-        let row = $(this).parents('tr')
-        let idArticle = row.attr('id')
+    /*MARQUER TACHE COMME FAITE*/
+    $('body').on('click', '.liTaskFinish', function() {
+        let liTask = $(this).parents('li');
+        let idTask = $(this).parents('li').attr('id');
         $.post(
-            'API/apiVendeur.php', {
-                action: 'afficherDetails',
-                idArticle: idArticle,
+            'API/apiTodo.php', {
+                action: 'finish',
+                idTask: idTask,
             },
-            function(data) {
-                $('#detailsArticles').append(data)
+            function(endTask) {
+                $(liTask).children('.modal').remove();
+                liTask.fadeOut(300, function() {
+                    liTask.append("<span><input type='checkbox' checked disabled class='liTaskEnd'>" + endTask) + "</span>";
+                    $(liTask).hide().appendTo($('#doneList')).fadeIn(300);
+                });
             },
+            'json'
         );
     });
 
-    //Formulaire modification article
-    $('body').on('submit', '.formUpdateArticle', function(event) {
-        $('#message').empty();
-        event.preventDefault()
-        idArticle = ($('.formUpdateArticle').attr('id'))
-        $.post(
-            'API/apiVendeur.php', {
-                form: 'updateArticle',
-                idArticle: idArticle,
-                titre: $('#titre').val(),
-                description: $('#description').val(),
-                prix: $('#prix').val(),
-                etat: $('select[name="etat"] option:selected').val(),
-                categorie: $('select[name="categorie"] option:selected').val(),
-                negociation: $('#negociation input:checked').val()
-            },
-            function(data) {
-                console.log(data);
-                let message = JSON.parse(data);
-                if (message === "success") {
-                    $("#message").append("<p>Update réussie !</p>");
-                    $('#' + idArticle).find('a').text($('#titre').val())
-                } else {
-                    $('#message').append("<p>" + message + "</p>");
-                }
-            },
-        );
+    /*ARCHIVER TACHE*/
+    $('body').on('click', '.liTaskArchive', function() {
+        let liTask = $(this).parents('li');
+        let idTask = $(this).parents('li').attr('id');
+
+        if ($(liTask).parents('.listAFaire').length) {
+            $.post(
+                'API/apiTodo.php', {
+                    action: 'finish',
+                    idTask: idTask,
+                },
+                function(endTask) {
+                    console.log(endTask);
+                    $(liTask).children('.modal').remove();
+                    $.post(
+                        'API/apiTodo.php', {
+                            action: 'archive',
+                            idTask: idTask,
+                        },
+                        function(endTask) {
+                            $(liTask).fadeOut(300, function() {
+                                $(liTask).children('.divClose').remove();
+                                $(liTask).children('span').remove();
+                                $(liTask).hide().appendTo($('#archiveList')).fadeIn(300);
+                            });
+                        },
+                        'json'
+                    );
+                },
+                'json'
+            );
+
+        } else {
+
+            $.post(
+                'API/apiTodo.php', {
+                    action: 'archive',
+                    idTask: idTask
+                },
+                function(endTask) {
+                    $(liTask).fadeOut(300, function() {
+                        $(liTask).children('.divClose').remove();
+                        $(liTask).children('span').remove();
+                        $(liTask).hide().appendTo($('#archiveList')).fadeIn(300);
+                    });
+                },
+                'json'
+            );
+        }
     });
+
+
 });
+
+function displayArchive() {
+    $('#archiveList').toggle('slow');
+}

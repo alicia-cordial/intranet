@@ -81,58 +81,81 @@ class UserModel extends Database
     }
 
 
-//ajouter tâche
+    /***************TODOLIST***************/
 
-    public function createNewTache($tacheName, $idUser)
+    public function insertTask($idUser, $titleTask)
     {
-        $request = $this->pdo->prepare("INSERT INTO todolist (titre, id_utilisateur) VALUES (?, ?)");
-        $request->execute([$tacheName, $idUser]);
-        $idTache = $this->pdo->lastInsertId();
-
-        $request2 = $this->pdo->prepare("INSERT INTO utilisateur_todolist (id_utilisateur, id_todolist) VALUES(LAST_INSERT_ID(), ?)");
-        $request2->execute([$_SESSION["user"]['id']]);
-
-        return ['id' => $idTache, 'id_utilisateur' => $idUser, 'titre' => $tacheName];
+        $request = $this->pdo->prepare("INSERT INTO todolist (`id_utilisateur`, `titre`, `description`) VALUES (:idUser, :title, :description)");
+        $insert = $request->execute(array(
+            ':idUser' => $idUser,
+            ':title' => $titleTask,
+            ':description' => ''));
+        $idTask = $this->pdo->lastInsertId();
+        return $idTask;
     }
 
-//afficher tâches
-
-public function showTache($id){
-    $req = $this->pdo->prepare("SELECT * FROM todolist INNER JOIN utilisateur ON utilisateur.id = todolist.id_utilisateur WHERE utilisateur.id = $id ");
-    $req->execute();
-    $allTaches = $req->fetchAll(PDO::FETCH_ASSOC);
-
-    return $allTaches;
-}
+    public function selectTask($idTask)
+    {
+        $request = $this->pdo->prepare("SELECT * FROM todolist WHERE id = ?");
+        $request->execute([$idTask]);
+        $taskData = $request->fetch(PDO::FETCH_ASSOC);
+        return $taskData;
+    }
 
 
+    public function selectTasks($idUser)
+    {
+        $request = $this->pdo->prepare("SELECT * FROM todolist WHERE id_utilisateur = ? AND status = 'todo' ");
+        $request->execute([$idUser]);
+        $tasksUserToDo = $request->fetchAll(PDO::FETCH_ASSOC);
 
-//update tâche 
+        $request2 = $this->pdo->prepare("SELECT * FROM todolist WHERE id_utilisateur = ? AND status = 'done' ");
+        $request2->execute([$idUser]);
+        $tasksUserDone = $request2->fetchAll(PDO::FETCH_ASSOC);
 
+        $request3 = $this->pdo->prepare("SELECT * FROM todolist WHERE id_utilisateur = ? AND status = 'archive' ");
+        $request3->execute([$idUser]);
+        $tasksUserArchive = $request3->fetchAll(PDO::FETCH_ASSOC);
+        $tasksUser = array('toDo' => $tasksUserToDo, 'done' => $tasksUserDone, 'archive' => $tasksUserArchive);
+        return $tasksUser;
+    }
 
-public function updateTache($idTache, $newName)
-{
-    $request = $this->pdo->prepare("UPDATE todolist SET titre = ? WHERE id = ?");
-    $request->execute([$newName, $idTache]);
-    return true;
-}
+    public function endTask($idTask)
+    {
+        $request = $this->pdo->prepare("UPDATE todolist SET status = 'done', END = NOW() WHERE id = ?");
+        $request->execute([$idTask]);
+        return date('d-m-Y');
+    }
 
+    public function archiveTask($idTask)
+    {
+        $request = $this->pdo->prepare("UPDATE todolist SET status = 'archive' WHERE id = ?");
+        $request->execute([$idTask]);
+        $request2 =  $this->pdo->prepare("SELECT `start` FROM todolist WHERE id= ?");
+        $date = $request->execute([$idTask]);
+        return $date;
+    }
 
-// delete tache
+    public function addDescription($description, $idTask)
+    {
+        $request = $this->pdo->prepare("UPDATE todolist SET description = ? WHERE id = ?");
+        $request->execute([$description, $idTask]);
+        return $description;
+    }
 
-
-public function deleteTache($id){
-    $request = $this->pdo->prepare("DELETE todolist, utilisateur_todolist from todolist INNER JOIN utilisateur_todolist on todolist.id = utilisateur_todolist.id_todolist WHERE todolist.id = $id"); 
-    $request->execute(['id']);
-    return true;
-}
-
-
-
-
+    public function updateTitle($newTitle, $idTask)
+    {
+        $request = $this->pdo->prepare("UPDATE todolist SET title = ? WHERE id = ?");
+        $request->execute([$newTitle, $idTask]);
+        return $newTitle;
+    }
 }
 //////
 //$model = new UserModel();
+//var_dump($model->insertTask('1', 'LALA'));
+//echo '<pre>';
+//var_dump($model->selectTasks('2'));
+//echo '</pre>';
 //var_dump($model->addMessage('HELP', '1'));
 //
 //var_dump($model->sendNewMessage('4', '3', 'lala'));
