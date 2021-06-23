@@ -10,8 +10,6 @@ if (isset($_POST['action']) && $_POST['action'] === 'showUsers') {
     $users = $model->showUsers($_POST['choice']);
     if (!empty($users)) {
         echo json_encode($users, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
-    } else {
-        echo json_encode('none', JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
     }
 }
 

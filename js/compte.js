@@ -18,21 +18,6 @@ $(document).ready(function() {
             //MESSAGERIE
         } else if ($(this).is('#navMessagerie')) {
             callSectionUser('messagerie')
-            $.post(
-                'API/apiMessagerie.php', { action: 'showConversation' },
-                function(data) {
-                    let messages = JSON.parse(data);
-                    for (let message of messages) {
-                        if (message === "success") {
-                            $("#Message").append("<p>Modification du profil réussie !</p>");
-
-                        }
-
-                    }
-
-
-                },
-            );
 
             // TO DO LIST
         } else if ($(this).is('#navTdl')) { // lien correspondant

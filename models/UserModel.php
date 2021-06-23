@@ -63,52 +63,38 @@ class UserModel extends Database
 
     /********MESSAGERIE***********/
 
-    /*public function addMessage($contenu, $id_utilisateur){
-     
-    
-        $newMessage = $this->pdo->prepare("INSERT INTO `message`(contenu, id_utilisateur) VALUES (:contenu, :id_utilisateur)");
-        $new = $newMessage->execute(array(
-                'contenu' => $contenu,
-                'id_utilisateur' => $id_utilisateur,
-            ));
-
-        return $new;
-    }*/
+ 
 
 
     public function addMessage($contenu, $idUser)
     {
         $request = $this->pdo->prepare("INSERT INTO `message`(contenu, id_utilisateur) VALUES (:contenu, :idUser)");
         $insert = $request->execute(array(
-            ':' => $contenu,
+            ':contenu' => $contenu,
             ':idUser' => $idUser));
         $idMessage = $this->pdo->lastInsertId();
         return $idMessage;
     }
 
-/*
-    public function selectMessage($idMessage)
+
+    public function selectMessages()
     {
-        $request = $this->pdo->prepare("SELECT * FROM `message` WHERE id = ?");
-        $request->execute([$idMessage]);
-        $taskData = $request->fetch(PDO::FETCH_ASSOC);
-        return $taskData;
-    }
-*/
-
-
-
-
-    public function selectMessage($idMessage)
-    {
-        $request = $this->pdo->prepare("SELECT `date`, identifiant, contenu FROM `message` INNER JOIN utilisateur ON utilisateur.id = message.id_utilisateur WHERE id = ? ORDER BY `date` ASC");
-        $request->execute([$idMessage]);
-        $taskData = $request->fetchAll(PDO::FETCH_ASSOC);
-        return $taskData;
+        $request = $this->pdo->prepare("SELECT `date`, identifiant, contenu FROM `message` INNER JOIN utilisateur ON utilisateur.id = message.id_utilisateur ORDER BY `date` ASC");
+        $request->execute([]);
+        $messages = $request->fetchAll(PDO::FETCH_ASSOC);
+        return $messages;
     }
 
 
-
+    public function selectMessage($choice)
+    {
+        if ($_SESSION['user']['status'] != '') {
+            $request = $this->pdo->prepare("SELECT * FROM `message`");
+            $request->execute([$choice]);
+        }
+        $messages = $request->fetchAll(PDO::FETCH_ASSOC);
+        return $messages;
+    }
 
     /***************TODOLIST***************/
 
@@ -182,7 +168,7 @@ class UserModel extends Database
 //////
 //$model = new UserModel();
 //echo '<pre>';
-//var_dump($model->insertTask('2', 'HELLO !!!!'));
+//var_dump($model->addMessage('LOL', '2'));
 //echo '</pre>';
 //echo '<pre>';
 //var_dump($model->selectTasks('2'));

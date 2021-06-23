@@ -5,11 +5,8 @@ class AdminModel extends Database
 {
     public function showUsers($choice)
     {
-       /* if (empty($choice)) {
-            $request = $this->pdo->prepare("SELECT * FROM utilisateur WHERE droit = 0 and status != 'supprimé' ");
-            $request->execute();
-        } else*/ {
-            $request = $this->pdo->prepare("SELECT * FROM utilisateur WHERE status = 0");
+        if ($_SESSION['user']['status'] == '1') {
+            $request = $this->pdo->prepare("SELECT * FROM utilisateur WHERE status = '0' ");
             $request->execute([$choice]);
         }
         $users = $request->fetchAll(PDO::FETCH_ASSOC);

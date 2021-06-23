@@ -1,73 +1,56 @@
 <?php 
 session_start(); 
 
-if (empty($_SESSION)) {
-    header("Location: index.php");
-} else {
-    require_once('../../models/UserModel.php');
-    $model = new UserModel();
-    $messagesUser = $model->selectMessage($_SESSION['user']['id']);
-  
-}?>
+?>
+
+<!--<link rel="stylesheet" href="css/app.css">-->
 
 <section id="sectionVendeur">
 
-<button id="myBtn"> To do list</button>
-    <!-- The Modal -->
-<div id="myModal" class="modal">
+<button id="myBtn"> Messagerie</button>
+    
+  <!-- The Modal -->
+<div id="myModal" class="modal" value="">
 
 <!-- Modal content -->
 <div class="modal-content" id="modal-content">
   <span class="close">&times;</span>
 
-    <section id="tableLists">
 
-    <article class="list">
+<article id="listeMessages">
+
+</article>
+
+
+   
+    <form method="post" id="formMessagerie">
+        <input type="text" id="userId" value="<?= $_SESSION['user']['id'] ?>" placeholder="<?= $_SESSION['user']['id']?> ">
+        <input type="text" id="contenu" placeholder="Type in your message right here bro !">
+        <button type="submit" class="submit">🔥 Send !</button>
         
-        <form methode="post">
-            <input type="text" id="userId" hidden value="<?= $_SESSION['user']['id'] ?>">
-            <input type="text" id="titleTask" placeholder="Ajouter une tache">
-            <button class="addTask"> +</button>
-        </form>
-    </article>
+    </form>
+
+    <div id="rep">
+    </div>
+
+</section>
+
+</div>
+
+</div>
 
 
 
-    <article class="list">
-        <h3>Taches terminées</h3>
-        <ul id="doneList">
-            <?php foreach ($tasksUser['done'] as $key => $task) : ?>
-                <li class="liTask" id="<?= $task['id'] ?>">
-                    <input class="liTaskTitle" readonly="readonly" value="<?= $task['titre'] ?>">
-                    <span><input type='checkbox' checked disabled class='liTaskEnd'> <?= $task['date_fin'] ?></span>
-                </li>
-            <?php endforeach; ?>
-        </ul>
-    </article>
-  
-    <article class="list" onclick="displayArchive()" id="containerArchive">
-        <h3>Taches archivées</h3>
-        <ul id="archiveList">
-            <?php foreach ($tasksUser['archive'] as $key => $task) : ?>
-                <li class="liTask" id="<?= $task['id'] ?>">
-                    <input class="liTaskTitle" readonly="readonly" value="<?= $task['titre'] ?>">
-                </li>
-            <?php endforeach; ?>
-        </ul>
-
-    </article>
-    </section>
 
 </section>
 
 
 
-</div>
-
-</div>
 
 
-<script>
+
+<script type="text/javascript">
+
 
 
 // Get the modal
@@ -88,4 +71,6 @@ btn.onclick = function() {
 span.onclick = function() {
     modal.style.display = "none";
 }
+
 </script>
+
