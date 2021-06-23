@@ -19,19 +19,19 @@ $(document).ready(function() {
         } else if ($(this).is('#navMessagerie')) {
             callSectionUser('messagerie')
             $.post(
-                'API/apiMessagerie.php', { action: 'selectContacts' },
+                'API/apiMessagerie.php', { action: 'showConversation' },
                 function(data) {
-                    let contacts = JSON.parse(data);
-                    let contactList = $('#contacts')
-                    console.log(data);
-                    if (contacts == 'none') {
-                        contactList.append("Aucune conversation");
-                    } else {
-                        for (let contact of contacts) {
+                    let messages = JSON.parse(data);
+                    for (let message of messages) {
+                        if (message === "success") {
+                            $("#Message").append("<p>Modification du profil réussie !</p>");
 
                         }
+
                     }
-                }
+
+
+                },
             );
 
             // TO DO LIST
@@ -62,7 +62,6 @@ $(document).ready(function() {
 
 
     })
-
 
 
 
@@ -101,93 +100,6 @@ $(document).ready(function() {
 
 })
 
-/*
-if ($(this).is('#navTdl')) {
-    callSectionAdmin('todolist')
-    $.post(
-        'API/apiTodo.php', {
-            action: 'showTache',
-        },
-        function(data) {
-            console.log(data);
-            let taches = JSON.parse(data);
-            if (taches === 'none') {
-                $('#taches').append("<p>Rien</p>")
-            } else {
-                for (let ta of taches) {
-                    if ($('#' + ta.id).length === 0) {
-                        if (ta.titre) {
-                            $('#taches').append("<tr value='" + ta.titre + "' id='" + ta.id + "'><td><td class='rowTache'>" + ta.titre + "</td><td><button class='updateTache'>Modifier le titre</button></td></tr>")
-                        }
-                    }
-                }
-            }
-        }
-    )
-
-}
-
-
-//update tache
-
-$('body').one('click', '.updateTache', function() {
-    let row = $(this).parents('tr')
-    let idTache = row.attr('id');
-    let tacheName = row.attr('value');
-    if ($('#newName').length == 0) {
-        $(this).after("<input id='newName' value='" + tacheName + "'>")
-    }
-    $('body').on('click', '.updateTache', function() {
-        $.post(
-            'API/apiTodo', { action: 'updateTache', idTache: idTache, newName: $('#newName').val() },
-            function(data) {
-                console.log(data);
-                $('#infoAdmin').html('<p>Nom de la tache updatée !</p>')
-                setTimeout(
-                    function() {
-                        $("#sectionVendeur").load(location.href + " #sectionVendeur")
-                    }, 2000);
-            }
-        )
-    })
-})
-
-//delete tache
-
-$('body').one('click', '.deleteTache', function() {
-    let row = $(this).parents('tr')
-    let idTache = row.attr('id');
-    $.post(
-        'API/apiTodo.php', { action: 'deleteTache', id: idTache },
-        function(data) {
-            console.log(data);
-            let message = JSON.parse(data);
-            row.hide()
-            $('#infoAdmin').html('<p>Tache supprimée.</p>')
-
-        }
-    )
-})
-
-//Button nouvelle tache
-$('body').one('click', '#addNewTache', function() {
-    if ($('#newTacheName').length == 0) {
-        $(this).after("<input id='newTacheName'>")
-    }
-    $('body').on('click', '#addNewTache', function() {
-        $.post(
-            'API/apiTodo.php', { action: 'addNewTache', titre: $('#newTacheName').val() },
-            function(data) {
-                console.log(data);
-                let tache = JSON.parse(data);
-                $('#newTacheName').empty()
-                $('#tachesVides').append("<tr value='" + tache.titre + "' id='" + tache.id + "'><td><td class='rowTache'>" + tache.titre + "</td><td><button class='deleteTache'>Supprimer la tache</button></td></tr>")
-                $('#infoAdmin').html('<p>Catégorie créée.</p>')
-
-            }
-        )
-    })
-})*/
 
 /*FUNCTIONS*/
 function callSectionUser(page) {

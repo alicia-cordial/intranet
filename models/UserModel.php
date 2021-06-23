@@ -58,7 +58,12 @@ class UserModel extends Database
 
 
   
-    public function addMessage($contenu, $id_utilisateur){
+
+
+
+    /********MESSAGERIE***********/
+
+    /*public function addMessage($contenu, $id_utilisateur){
      
     
         $newMessage = $this->pdo->prepare("INSERT INTO `message`(contenu, id_utilisateur) VALUES (:contenu, :id_utilisateur)");
@@ -68,17 +73,41 @@ class UserModel extends Database
             ));
 
         return $new;
-    }
+    }*/
 
 
-
-    public function selectMessagesConversation()
+    public function addMessage($contenu, $idUser)
     {
-        $request = $this->pdo->prepare("SELECT `date`, identifiant, contenu FROM `message` INNER JOIN utilisateur ON utilisateur.id = message.id_utilisateur ORDER BY `date` ASC LIMIT 100");
-        $request->execute();
-        $messages = $request->fetchAll(PDO::FETCH_ASSOC);
-        return $messages;
+        $request = $this->pdo->prepare("INSERT INTO `message`(contenu, id_utilisateur) VALUES (:contenu, :idUser)");
+        $insert = $request->execute(array(
+            ':' => $contenu,
+            ':idUser' => $idUser));
+        $idMessage = $this->pdo->lastInsertId();
+        return $idMessage;
     }
+
+/*
+    public function selectMessage($idMessage)
+    {
+        $request = $this->pdo->prepare("SELECT * FROM `message` WHERE id = ?");
+        $request->execute([$idMessage]);
+        $taskData = $request->fetch(PDO::FETCH_ASSOC);
+        return $taskData;
+    }
+*/
+
+
+
+
+    public function selectMessage($idMessage)
+    {
+        $request = $this->pdo->prepare("SELECT `date`, identifiant, contenu FROM `message` INNER JOIN utilisateur ON utilisateur.id = message.id_utilisateur WHERE id = ? ORDER BY `date` ASC");
+        $request->execute([$idMessage]);
+        $taskData = $request->fetchAll(PDO::FETCH_ASSOC);
+        return $taskData;
+    }
+
+
 
 
     /***************TODOLIST***************/
@@ -138,21 +167,23 @@ class UserModel extends Database
 
     public function addDescription($description, $idTask)
     {
-        $request = $this->pdo->prepare("UPDATE todolist SET description = ? WHERE id = ?");
+        $request = $this->pdo->prepare("UPDATE todolist SET `description` = ? WHERE id = ?");
         $request->execute([$description, $idTask]);
         return $description;
     }
 
     public function updateTitle($newTitle, $idTask)
     {
-        $request = $this->pdo->prepare("UPDATE todolist SET title = ? WHERE id = ?");
+        $request = $this->pdo->prepare("UPDATE todolist SET titre = ? WHERE id = ?");
         $request->execute([$newTitle, $idTask]);
         return $newTitle;
     }
 }
 //////
 //$model = new UserModel();
-//var_dump($model->insertTask('1', 'LALA'));
+//echo '<pre>';
+//var_dump($model->insertTask('2', 'HELLO !!!!'));
+//echo '</pre>';
 //echo '<pre>';
 //var_dump($model->selectTasks('2'));
 //echo '</pre>';

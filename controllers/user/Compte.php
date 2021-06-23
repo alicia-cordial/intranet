@@ -7,7 +7,7 @@ class Compte
     {
         $title = "Compte";
         $css = "compte.css";
-        $js = ['module.js', 'compte.js', 'todo.js'];
+        $js = ['module.js', 'compte.js', 'todo.js', 'admin.js'];
         ob_start();
         $this->selectMain();
         $main = ob_get_clean();
@@ -24,7 +24,7 @@ class Compte
              if ($_SESSION['user']['status'] === '0') {
                 require_once('views/user/userIndex.php');
             } else if ($_SESSION['user']['status'] === '1') {
-                require_once('views/admin/adminIndex.php');
+                require_once('views/user/userIndex.php');
             }
         }
      

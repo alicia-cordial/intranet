@@ -1,97 +1,73 @@
 <?php 
-require_once('../../models/UserModel.php');
 session_start(); 
-$model = new UserModel();
 
+if (empty($_SESSION)) {
+    header("Location: index.php");
+} else {
+    require_once('../../models/UserModel.php');
+    $model = new UserModel();
+    $messagesUser = $model->selectMessage($_SESSION['user']['id']);
+  
+}?>
 
-if (isset($_POST['submit'])) {
-   
-    $contenu = htmlspecialchars($_POST['contenu']);
-    $id_utilisateur = $_SESSION['user']['id'];
-    
-    $model->addMessage($contenu, $id_utilisateur);
-    $success = "bravo";
- 
-       
-}
-
-
-
-?>
-
-
-
-<link rel="stylesheet" href="css/app.css">
 <section id="sectionVendeur">
-    <article id="contacts">
 
-    </article>
-
-    <button id="myBtn"> Messagerie</button>
-  <!-- The Modal -->
+<button id="myBtn"> To do list</button>
+    <!-- The Modal -->
 <div id="myModal" class="modal">
 
 <!-- Modal content -->
-<div class="modal-content">
+<div class="modal-content" id="modal-content">
   <span class="close">&times;</span>
 
-<section class="chat">
-    <div class="messages" id="messages">
-<?php  foreach($model->selectMessagesConversation() as $messages):
-      
-        ?>
-    <div class="message">
-        <h4><?= $messages['date']; ?>  <?= $messages['identifiant']; ?></h4>
-        <h4><?= $messages['contenu']; ?></h4>
- 
-    </div>
-    <?php endforeach; ?>
-  
+    <section id="tableLists">
 
-    
-    </div>
-    <div id="form">
-    <form method="POST">
-        <input type="text" id="user" name="id" value="<?= $_SESSION['user']['id']?> " placeholder="<?= $_SESSION['user']['id']?> ">
-        <input type="text" id="contenu" name="contenu" placeholder="Type in your message right here bro !">
-        <button type="submit" name="submit">🔥 Send !</button>
+    <article class="list">
         
-    </form>
-    </div>
+        <form methode="post">
+            <input type="text" id="userId" hidden value="<?= $_SESSION['user']['id'] ?>">
+            <input type="text" id="titleTask" placeholder="Ajouter une tache">
+            <button class="addTask"> +</button>
+        </form>
+    </article>
+
+
+
+    <article class="list">
+        <h3>Taches terminées</h3>
+        <ul id="doneList">
+            <?php foreach ($tasksUser['done'] as $key => $task) : ?>
+                <li class="liTask" id="<?= $task['id'] ?>">
+                    <input class="liTaskTitle" readonly="readonly" value="<?= $task['titre'] ?>">
+                    <span><input type='checkbox' checked disabled class='liTaskEnd'> <?= $task['date_fin'] ?></span>
+                </li>
+            <?php endforeach; ?>
+        </ul>
+    </article>
+  
+    <article class="list" onclick="displayArchive()" id="containerArchive">
+        <h3>Taches archivées</h3>
+        <ul id="archiveList">
+            <?php foreach ($tasksUser['archive'] as $key => $task) : ?>
+                <li class="liTask" id="<?= $task['id'] ?>">
+                    <input class="liTaskTitle" readonly="readonly" value="<?= $task['titre'] ?>">
+                </li>
+            <?php endforeach; ?>
+        </ul>
+
+    </article>
+    </section>
+
 </section>
+
+
 
 </div>
 
 </div>
-</section>
 
 
-
-
-
-
-
-
-
-
-<script type="text/javascript">
-
-/*CHARGMENT PAGE */
-
-window.setInterval('refresh()', 10000); 	
-    // Call a function every 10000 milliseconds 
-    // (OR 10 seconds).
-
-    // Refresh or reload page.
-    function refresh() {
-        window.location.reload();
-    }
-
-    element = document.getElementById('form');
-	element.scrollTop = element.scrollHeight;
-
-
-
+<script>
 
 
 // Get the modal
@@ -112,15 +88,4 @@ btn.onclick = function() {
 span.onclick = function() {
     modal.style.display = "none";
 }
-
-// When the user clicks anywhere outside of the modal, close it
-/*window.onclick = function(event) {
-    if (event.target == modal) {
-        modal.style.display = "none";
-    }
-}*/
-
-
-
-
 </script>

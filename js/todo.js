@@ -2,11 +2,11 @@ $(document).ready(function() {
     $('#archiveList').hide();
 
     /*AJOUT TACHE*/
-    $('.addTask').click(function(e) {
+    $('body').on('submit', '#formTodo', function(e) {
         e.preventDefault();
         $.post(
             'API/apiTodo.php', {
-                action: "createTask",
+                action: 'createTask',
                 userId: $('#userId').val(),
                 titleTask: $('#titleTask').val()
             },
@@ -19,12 +19,13 @@ $(document).ready(function() {
                     function(result) {
                         let data = JSON.parse(result);
                         $('#toDoList').append("<li class='liTask' id='" + data.id + "'>" +
-                            "<input class='liTaskTitle' readOnly='readonly' value='" + data.title + "'</li>");
+                            "<input class='liTaskTitle' readOnly='readonly' value='" + data.titre + "'</li>");
                         $('#titleTask').val('');
                     }
+
                 )
             },
-            'json'
+
         )
     });
 
@@ -35,7 +36,7 @@ $(document).ready(function() {
 
         /*Affiche le bouton pour archiver*/
         if ($(thisLi).children(".divClose").length === 0 && $(thisLi).parents('#archiveList').length === 0) {
-            $('li').children('.divClose').fadeOut(200, function() {
+            $('li').children('.divClose').fadeOut(100, function() {
                 $(this).remove();
             });
             $('<div class="divClose"><button class="liTaskArchive">Archiver x</button></div>').hide().prependTo($(thisLi)).fadeIn(200);
@@ -61,10 +62,11 @@ $(document).ready(function() {
                     let options = [{ day: 'numeric' }, { month: 'short' }, { year: 'numeric' }];
                     date = date.toLocaleDateString('en-Us', options);
                     $("<div class='modal'>" +
-                        "<div><span>Création : " + date + "</span><input  title='marquer comme terminée' type='checkbox' class='liTaskFinish'></div>" +
+                        "<div><span>Création : " + data.date_debut + "</span><input  title='marquer comme terminée' type='checkbox' class='liTaskFinish'></div>" +
                         "<div><textarea class='liTaskDesc' placeholder='description'>" + data.description + "</textarea>" +
                         "<button class='addDescription'>Sauvegarder</button></div>" +
-                        "</div>").hide().appendTo($(thisLi)).fadeIn(200);
+                        "</div>").hide().appendTo($(thisLi)).fadeIn(100);
+
                 });
         }
     });
@@ -136,7 +138,7 @@ $(document).ready(function() {
                     $(liTask).hide().appendTo($('#doneList')).fadeIn(300);
                 });
             },
-            'json'
+
         );
     });
 
@@ -166,10 +168,10 @@ $(document).ready(function() {
                                 $(liTask).hide().appendTo($('#archiveList')).fadeIn(300);
                             });
                         },
-                        'json'
+
                     );
                 },
-                'json'
+
             );
 
         } else {
@@ -183,10 +185,10 @@ $(document).ready(function() {
                     $(liTask).fadeOut(300, function() {
                         $(liTask).children('.divClose').remove();
                         $(liTask).children('span').remove();
-                        $(liTask).hide().appendTo($('#archiveList')).fadeIn(300);
+                        $(liTask).hide().appendTo($('#archiveList')).fadeIn(100);
                     });
                 },
-                'json'
+
             );
         }
     });
