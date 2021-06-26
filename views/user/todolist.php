@@ -12,9 +12,9 @@ if (empty($_SESSION)) {
 
 <section id="sectionVendeur">
 
-<button id="myBtn"> To do list</button>
+<button id="myBtn2"> To do list</button>
     <!-- The Modal -->
-<div id="myModal" class="modal">
+<div id="myModal2" class="modal">
 
 <!-- Modal content -->
 <div class="modal-content" id="modal-content">
@@ -22,7 +22,7 @@ if (empty($_SESSION)) {
 
     <section id="tableLists">
 
-    <article class="list">
+    <article class="list" id="listTodo">
         <h3>Taches a faire</h3>
         <ul id="toDoList" class="listAFaire">
             <?php foreach ($tasksUser['toDo'] as $key => $task) : ?>
@@ -75,10 +75,10 @@ if (empty($_SESSION)) {
 
 
 // Get the modal
-var modal = document.getElementById("myModal");
+var modal = document.getElementById("myModal2");
 
 // Get the button that opens the modal
-var btn = document.getElementById("myBtn");
+var btn = document.getElementById("myBtn2");
 
 // Get the <span> element that closes the modal
 var span = document.getElementsByClassName("close")[0];

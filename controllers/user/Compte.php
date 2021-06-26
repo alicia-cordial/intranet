@@ -7,7 +7,7 @@ class Compte
     {
         $title = "Compte";
         $css = "compte.css";
-        $js = ['module.js', 'compte.js', 'todo.js', 'admin.js', 'messagerie.js'];
+        $js = ['module.js', 'compte.js', 'todo.js', 'admin.js', 'messagerie.js', 'agenda.js'];
         ob_start();
         $this->selectMain();
         $main = ob_get_clean();

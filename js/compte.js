@@ -41,6 +41,10 @@ $(document).ready(function() {
 
                 }
             );
+        } else if ($(this).is('#navAgenda')) {
+            callSectionUser('agenda')
+
+            // TO DO LIST
         }
 
 

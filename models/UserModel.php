@@ -77,25 +77,37 @@ class UserModel extends Database
     }
 
 
+    public function selectMessage($idMessage)
+    {
+        $request = $this->pdo->prepare("SELECT * FROM `message` WHERE id = ?");
+        $request->execute([$idMessage]);
+        $messageData = $request->fetchAll(PDO::FETCH_ASSOC);
+        return $messageData;
+    }
+
+
     public function selectMessages()
     {
-        $request = $this->pdo->prepare("SELECT `date`, identifiant, contenu FROM `message` INNER JOIN utilisateur ON utilisateur.id = message.id_utilisateur ORDER BY `date` ASC");
-        $request->execute([]);
-        $messages = $request->fetchAll(PDO::FETCH_ASSOC);
-        return $messages;
+    
+            $request = $this->pdo->prepare("SELECT `date`, identifiant, contenu FROM `message` INNER JOIN utilisateur ON utilisateur.id = message.id_utilisateur ORDER BY `date` ASC");
+            $request->execute();
+        
+        $messageUser = $request->fetchAll(PDO::FETCH_ASSOC);
+        return $messageUser;
     }
 
+    
 
-    public function selectMessage($choice)
+    public function sendNewMessage($idUser, $contenu)
     {
-        if ($_SESSION['user']['status'] != '') {
-            $request = $this->pdo->prepare("SELECT * FROM `message`");
-            $request->execute([$choice]);
-        }
-        $messages = $request->fetchAll(PDO::FETCH_ASSOC);
-        return $messages;
-    }
-
+        $request = $this->pdo->prepare("INSERT INTO `message` (id_utilisateur, contenu) VALUES (?, ?)");
+        $request->execute([$idUser, $contenu]);
+        $idMessage = $this->pdo->lastInsertId();
+        $request2 = $this->pdo->prepare("SELECT * FROM `message` INNER JOIN utilisateur ON utilisateur.id = message.id_utilisateur WHERE id = $idMessage");
+        $request2->execute();
+        $message = $request2->fetch(PDO::FETCH_ASSOC);
+        return $message;
+    } 
     /***************TODOLIST***************/
 
     public function insertTask($idUser, $titleTask)
@@ -168,10 +180,10 @@ class UserModel extends Database
 //////
 //$model = new UserModel();
 //echo '<pre>';
-//var_dump($model->addMessage('LOL', '2'));
+//var_dump($model->sendNewMessage('2', 'LALA!!'));
 //echo '</pre>';
 //echo '<pre>';
-//var_dump($model->selectTasks('2'));
+//var_dump($model->selectMessage('181'));
 //echo '</pre>';
 //var_dump($model->addMessage('HELP', '1'));
 //

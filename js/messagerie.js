@@ -1,55 +1,57 @@
 $(document).ready(function() {
 
-    $('body').on('click', '.modal', function() {
-        let choice = $(this).attr('value');
-        $('#listeMessages').empty()
-        console.log(choice)
-        $.post(
-            'API/apiMessagerie.php', {
-                action: 'displayMessage',
-                choice: choice
-            },
-            function(data) {
-                console.log(data);
-                let messages = JSON.parse(data);
-                if (messages === 'none') {
-                    $('#listeMessages').append("<p>Rien</p>")
-                } else {
-                    for (let message of messages) {
-
-                        $('#listeMessages').append("<tr value='" + message.contenu + "' id='" + message.id + "'><td>" + message.identifiant + "</td><td>" + message.date + "</td><td>" + message.contenu + "</td></tr>")
-
-                    }
-                    $("#myModal").scrollTop($("#myModal")[0].scrollHeight);
-
-                }
-            }
-        )
-    })
-
 
     /*AJOUT MESSAGE*/
     $('body').on('submit', '#formMessagerie', function(e) {
-        $('#contenu').empty();
         e.preventDefault();
         $.post(
             'API/apiMessagerie.php', {
-                action: 'createMessage',
+                action: 'sendNewMessage',
                 userId: $('#userId').val(),
-                contenu: $('#contenu').val(),
-
+                contenu: $('#contenu').val()
             },
-            function(data) {
-                console.log(data);
-                let message = JSON.parse(data);
-                $('#contenu').empty()
-                $('#listeMessages').append("<tr value='" + message.contenu + "' id='" + message.id + "'><td>" + message.identifiant + "</td><td>" + message.date + "</td><td>" + message.contenu + "</td></tr>")
-                $('#rep').html('<p>Message créé.</p>')
+            function(idMessage) {
+                $.post(
+                    'API/apiMessagerie.php', {
+                        action: "displayMessage",
+                        idMessage: idMessage
+                    },
+                    function(resultat) {
+                        let data = JSON.parse(resultat);
 
-            }
+                        $('#messagerie').append("<li class='liMessage' id='" + data.id + "'>" + "<input class='liMessageTitle' readOnly='readonly' value='" + data.identifiant + data.date + "'</li>" +
+                            "<input class='liMessageTitle' readOnly='readonly' value='" + data.contenu + "'</li>");
+                        $('#contenu').val('');
+                    }
 
+                )
+            },
 
         )
     });
 
 });
+
+/*
+ //NEW MESSAGE IN CONVERSATION
+    $('body').on('submit', '#formNewMessage', function (event) {
+        let idDestinataire = $(this).attr('value')
+        event.preventDefault()
+        let conversation = $('#conversation')
+        console.log(idDestinataire)
+        console.log($('#newMessage').val())
+        $.post(
+            'API/apiMessagerie.php', {
+                action: 'sendNewMessage',
+                idDestinataire: idDestinataire,
+                messageContent: $('#newMessage').val()
+            },
+            function (data) {
+                let message = JSON.parse(data);
+                $('#newMessage').val('')
+                console.log(data);
+                conversation.append("<p id='message" + message.id + "' class='messageUtilisateur'>Envoyé le : " + message.date + " - " + message.contenu + "</p>")
+            }
+        )
+    })
+*/

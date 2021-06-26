@@ -1,7 +1,14 @@
 <?php 
 session_start(); 
 
-?>
+if (empty($_SESSION)) {
+    header("Location: index.php");
+} else {
+    require_once('../../models/UserModel.php');
+    $model = new UserModel();
+    $messageUser = $model->selectMessages();
+  
+}?>
 
 <!--<link rel="stylesheet" href="css/app.css">-->
 
@@ -10,17 +17,26 @@ session_start();
 <button id="myBtn"> Messagerie</button>
     
   <!-- The Modal -->
-<div id="myModal" class="modal" value="">
+<div id="myModal" class="modal">
 
 <!-- Modal content -->
 <div class="modal-content" id="modal-content">
   <span class="close">&times;</span>
 
 
-<article id="listeMessages">
-
-</article>
-
+  <section id="tableLists">
+  <article class="list">
+  
+    <ul id="messagerie">
+        <?php foreach ($messageUser as $key => $message) : ?>
+            <li class="liMessage" id="<?= $message['id'] ?>">
+                <input class="liMessageTitle" readonly="readonly" value="<?= $message['identifiant'] ?>">
+                <input class="liMessageTitle" readonly="readonly" value="<?= $message['date'] ?>">
+                <input class="liMessageTitle" readonly="readonly" value="<?= $message['contenu'] ?>">
+            </li>
+        <?php endforeach; ?>
+    
+    </ul>
 
    
     <form method="post" id="formMessagerie">
@@ -30,19 +46,16 @@ session_start();
         
     </form>
 
-    <div id="rep">
-    </div>
 
+  </article>
 </section>
 
 </div>
 
 </div>
 
-
-
-
 </section>
+
 
 
 
