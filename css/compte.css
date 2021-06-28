@@ -164,6 +164,11 @@ h2 {
     padding: 20px;
 }
 
+#messagerie {
+    display: block;
+    overflow: auto;
+}
+
 
 /*****************TO DO LIST***************************************************************/
 

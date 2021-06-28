@@ -24,7 +24,7 @@ if (empty($_SESSION)) {
 
 
   <section id="tableLists">
-  <article class="list">
+  <article class="list" id="ListMess">
   
     <ul id="messagerie">
         <?php foreach ($messageUser as $key => $message) : ?>
@@ -37,7 +37,7 @@ if (empty($_SESSION)) {
     
     </ul>
 
-   
+    </article> 
     <form method="post" id="formMessagerie">
         <input type="hidden" id="userId" value="<?= $_SESSION['user']['id'] ?>" placeholder="<?= $_SESSION['user']['id']?> ">
         <input type="text" id="contenu" placeholder="Type in your message right here bro !">
@@ -47,7 +47,7 @@ if (empty($_SESSION)) {
 
  
 
-  </article>
+
 </section>
 
 </div>
