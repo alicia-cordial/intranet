@@ -1,6 +1,6 @@
 <main id="mainCompte" class="compte">
     <article>
-        <h2>CONNEXION</h2>
+        <h2>HELLO, CONNECTE TOI !</h2>
     </article>
     <article class="form">
         <form id="formConnexion" class="formConnexion">

@@ -73,3 +73,41 @@ h2 {
 .formInfo p:nth-child(2) {
     animation: appear 5s 1 backwards;
 }
+
+
+/*********************************INDEX****************************************************/
+
+.Userindex {
+    display: flex;
+    flex-direction: column;
+    background-color: #1cf50866;
+}
+
+.indexUser {
+    display: flex;
+    flex-direction: row;
+    color: white;
+}
+
+.indexUser li {
+    list-style: none;
+    padding-right: 20px;
+}
+
+
+/**********************************POP UP***************************************************/
+
+#sectionVendeur {
+    display: flex;
+    flex-direction: column;
+}
+
+#myModal,
+#myBtn {
+    justify-content: center;
+    align-items: center;
+    justify-items: center;
+    align-self: center;
+    text-align: center;
+    margin-bottom: 20px;
+}

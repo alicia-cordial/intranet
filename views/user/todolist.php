@@ -12,9 +12,9 @@ if (empty($_SESSION)) {
 
 <section id="sectionVendeur">
 
-<button id="myBtn2"> To do list</button>
+<button id="myBtn"> To do list</button>
     <!-- The Modal -->
-<div id="myModal2" class="modal">
+<div id="myModal" class="modal">
 
 <!-- Modal content -->
 <div class="modal-content" id="modal-content">
@@ -75,10 +75,10 @@ if (empty($_SESSION)) {
 
 
 // Get the modal
-var modal = document.getElementById("myModal2");
+var modal = document.getElementById("myModal");
 
 // Get the button that opens the modal
-var btn = document.getElementById("myBtn2");
+var btn = document.getElementById("myBtn");
 
 // Get the <span> element that closes the modal
 var span = document.getElementsByClassName("close")[0];
