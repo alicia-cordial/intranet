@@ -4,18 +4,16 @@
     
     <!-- The Modal -->
   <div id="myModal" class="modal">
+      <section class="updateProfil">
   
   <!-- Modal content -->
   <div class="modal-content" id="modal-content">
     <span class="close">&times;</span>
     <article id="articleForm">
-        <h3>VOTRE PROFIL</h3>
-        <h4>IDENTIFIANT : <?= $_SESSION['user']['identifiant'] ?></h4>
 
 
-        <form id="formUpdateUser">
+        <form id="formUpdateUser" class="formUpdateUser">
             <div>
-                <label for="login">login</label>
                 <input type="text" id="login" name="login" value="<?= $_SESSION['user']['identifiant'] ?>">
             </div>
             <div>
@@ -37,7 +35,7 @@
 
 
     </div>
-
+      </section>
 </div>
 
 </section>

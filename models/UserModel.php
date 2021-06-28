@@ -89,7 +89,7 @@ class UserModel extends Database
     public function selectMessages()
     {
     
-            $request = $this->pdo->prepare("SELECT `date`, identifiant, contenu FROM `message` INNER JOIN utilisateur ON utilisateur.id = message.id_utilisateur ORDER BY `date` ASC");
+            $request = $this->pdo->prepare("SELECT * FROM `message` INNER JOIN utilisateur ON utilisateur.id = message.id_utilisateur ORDER BY `date` ASC");
             $request->execute();
         
         $messageUser = $request->fetchAll(PDO::FETCH_ASSOC);

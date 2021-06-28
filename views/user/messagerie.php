@@ -10,9 +10,8 @@ if (empty($_SESSION)) {
   
 }?>
 
-<link rel="stylesheet" href="css/app.css">
 
-<section id="sectionVendeur">
+<section id="sectionVendeur" class="sectionMessagerie">
 
 <button id="myBtn"> Messagerie</button>
     
@@ -31,8 +30,8 @@ if (empty($_SESSION)) {
         <?php foreach ($messageUser as $key => $message) : ?>
             <li class="liMessage" id="<?= $message['id'] ?>">
                 <input class="liMessageTitle" readonly="readonly" value="<?= $message['identifiant'] ?>">
+                <input class="liMessageTitle" id="content" readonly="readonly" value="<?= $message['contenu'] ?>">
                 <input class="liMessageTitle" readonly="readonly" value="<?= $message['date'] ?>">
-                <input class="liMessageTitle" readonly="readonly" value="<?= $message['contenu'] ?>">
             </li>
         <?php endforeach; ?>
     
@@ -40,12 +39,13 @@ if (empty($_SESSION)) {
 
    
     <form method="post" id="formMessagerie">
-        <input type="text" id="userId" value="<?= $_SESSION['user']['id'] ?>" placeholder="<?= $_SESSION['user']['id']?> ">
+        <input type="hidden" id="userId" value="<?= $_SESSION['user']['id'] ?>" placeholder="<?= $_SESSION['user']['id']?> ">
         <input type="text" id="contenu" placeholder="Type in your message right here bro !">
         <button type="submit" class="submit">🔥 Send !</button>
         
     </form>
 
+ 
 
   </article>
 </section>

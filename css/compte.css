@@ -17,7 +17,8 @@
     flex-direction: column;
 }
 
-input,
+.formUpdateUser input,
+.formConnexion input,
 button {
     padding: 20px;
     margin: 10px;
@@ -28,23 +29,17 @@ h2 {
 }
 
 .formInfo {
+    display: flex;
+    flex-direction: column;
     margin-top: 20px;
     padding: 20px;
     border: 3px solid black;
     box-shadow: 0 0 5px black;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
+    border-radius: 10px;
     animation: none;
-    text-align: justify;
-    text-align: center;
     width: 80%;
     height: auto;
-    padding: 10px;
-    border-radius: 10px;
     background-color: rgba(0, 0, 0, 0.5);
-    width: 50%;
     margin-bottom: 15px;
     color: white;
 }
@@ -63,7 +58,6 @@ h2 {
 .formInfo p {
     width: 80%;
     opacity: 1;
-    text-align: justify;
     text-shadow: 1px 1px #555555, -1px 1px #555555, 1px -1px #555555, -1px -1px #555555, 1px 1px 5px #555555;
     font-size: 1.2em;
     color: white;
@@ -100,6 +94,7 @@ h2 {
 #sectionVendeur {
     display: flex;
     flex-direction: column;
+    list-style: none;
 }
 
 #myModal,
@@ -111,3 +106,85 @@ h2 {
     text-align: center;
     margin-bottom: 20px;
 }
+
+.close {
+    float: right;
+    font-size: 50px;
+}
+
+#myBtn {
+    border: none;
+    background-color: #1cf50866;
+    border-radius: 10px;
+    font-size: 25px;
+    font-weight: bold;
+}
+
+
+/*************************MESSAGERIE******************************************************/
+
+.sectionMessagerie li {
+    list-style: none;
+}
+
+.liMessageTitle {
+    border: none;
+}
+
+.messageDestinataire {
+    color: pink;
+    text-align: left;
+    font-size: large;
+    border: 1px solid black;
+    border-radius: 5px;
+}
+
+.messageUtilisateur {
+    color: blue;
+    text-align: right;
+    border: 1px solid black;
+    border-radius: 5px;
+}
+
+#content {
+    font-size: 20px;
+    align-content: right;
+    border: 1px solid black;
+    border-radius: 5px;
+    text-align: center;
+}
+
+#formMessagerie {
+    display: flex;
+    flex-direction: column;
+}
+
+#contenu {
+    font-size: 15px;
+    padding: 20px;
+}
+
+
+/*****************TO DO LIST***************************************************************/
+
+.sectionTdl li {
+    list-style: none;
+}
+
+.sectionTdl input {
+    border: none;
+}
+
+#tableLists {
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    justify-content: space-around;
+}
+
+.list {
+    padding-bottom: 30px;
+}
+
+
+/*******************GESTION UTILISATEURS***************************************************/

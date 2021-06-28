@@ -10,7 +10,7 @@ if (empty($_SESSION)) {
   
 }?>
 
-<section id="sectionVendeur">
+<section id="sectionVendeur" class="sectionTdl">
 
 <button id="myBtn"> To do list</button>
     <!-- The Modal -->
