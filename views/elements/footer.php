@@ -1,5 +1,5 @@
 <footer>
-    <p>Footer</p>
+    <p>©Piglet Production</p>
 </footer>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>

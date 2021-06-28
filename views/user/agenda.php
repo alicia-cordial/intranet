@@ -1,19 +1,26 @@
+
+<link rel="stylesheet" href="css/agenda.css">
+<link href="https://fonts.googleapis.com/css?family=Roboto:100,100i,300,300i,400,400i,500,500i,700,700i,900,900i" rel="stylesheet">
 <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
-
-
-
 <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
 <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
-
 <!------ Include the above in your HEAD tag ---------->
 
 	<section id="sectionVendeur">
 
 
+<button id="myBtn"> Agenda</button>
+    
+  <!-- The Modal -->
+<div id="myModal" class="modal">
 
-<link href="https://fonts.googleapis.com/css?family=Roboto:100,100i,300,300i,400,400i,500,500i,700,700i,900,900i" rel="stylesheet">
-<link rel="stylesheet" href="../../css/agenda.css">
+<!-- Modal content -->
+<div class="modal-content" id="modal-content">
+  <span class="close">&times;</span>
+
+
 <script>
+//haut du calendrier
 
 	$(document).ready(function() {
 	    var date = new Date();
@@ -52,19 +59,19 @@
 		});
 	
 	
-		/* initialize the calendar
+		/* initialize the calendar INITIALISATION DU CALENDRIER
 		-----------------------------------------------------------------*/
 		
 		var calendar =  $('#calendar').fullCalendar({
 			header: {
-				left: 'title',
+				left: 'titre',
 				center: 'agendaDay,agendaWeek,month',
-				right: 'prev,next today'
+				right: 'précédant,suivant auj'
 			},
 			editable: true,
 			firstDay: 1, //  1(Monday) this can be changed to 0(Sunday) for the USA system
 			selectable: true,
-			defaultView: 'month',
+			defaultView: 'mois',
 			
 			axisFormat: 'h:mm',
 			columnFormat: {
@@ -80,8 +87,8 @@
             },
 			allDaySlot: false,
 			selectHelper: true,
-			select: function(start, end, allDay) {
-				var title = prompt('Event Title:');
+			select: function(start, end, allDay) { //ICI LE POP UP????
+				var title = prompt(':');
 				if (title) {
 					calendar.fullCalendar('renderEvent',
 						{
@@ -172,70 +179,12 @@
 	});
 
 </script>
-<style>
 
-	body {
-	    margin-bottom: 40px;
-		margin-top: 40px;
-		text-align: center;
-		font-size: 14px;
-		font-family: 'Roboto', sans-serif;
-		background:url(http://www.digiphotohub.com/wp-content/uploads/2015/09/bigstock-Abstract-Blurred-Background-Of-92820527.jpg);
-		}
-		
-	#wrap {
-		width: 1100px;
-		margin: 0 auto;
-		}
-		
-	#external-events {
-		float: left;
-		width: 150px;
-		padding: 0 10px;
-		text-align: left;
-		}
-		
-	#external-events h4 {
-		font-size: 16px;
-		margin-top: 0;
-		padding-top: 1em;
-		}
-		
-	.external-event { /* try to mimick the look of a real event */
-		margin: 10px 0;
-		padding: 2px 4px;
-		background: #3366CC;
-		color: #fff;
-		font-size: .85em;
-		cursor: pointer;
-		}
-		
-	#external-events p {
-		margin: 1.5em 0;
-		font-size: 11px;
-		color: #666;
-		}
-		
-	#external-events p input {
-		margin: 0;
-		vertical-align: middle;
-		}
+</div>
 
-	#calendar {
-/* 		float: right; */
-        margin: 0 auto;
-		width: 900px;
-		background-color: #FFFFFF;
-		  border-radius: 6px;
-        box-shadow: 0 1px 2px #C3C3C3;
-		-webkit-box-shadow: 0px 0px 21px 2px rgba(0,0,0,0.18);
--moz-box-shadow: 0px 0px 21px 2px rgba(0,0,0,0.18);
-box-shadow: 0px 0px 21px 2px rgba(0,0,0,0.18);
-		}
+</div>
 
-</style>
-</head>
-<body>
+
 <div id='wrap'>
 
 <div id='calendar'></div>
@@ -243,3 +192,29 @@ box-shadow: 0px 0px 21px 2px rgba(0,0,0,0.18);
 <div style='clear:both'></div>
 </div>
 </section>
+
+<script type="text/javascript">
+
+
+
+// Get the modal
+var modal = document.getElementById("myModal");
+
+// Get the button that opens the modal
+var btn = document.getElementById("myBtn");
+
+// Get the <span> element that closes the modal
+var span = document.getElementsByClassName("close")[0];
+
+// When the user clicks on the button, open the modal
+btn.onclick = function() {
+    modal.style.display = "block";
+}
+
+// When the user clicks on <span> (x), close the modal
+span.onclick = function() {
+    modal.style.display = "none";
+}
+
+</script>
+

@@ -1,13 +1,75 @@
-#bloc2, #bloc3, #statusInfo, #formNewMessage {
-    display: none;
+.compte {
+    background: rgba(255, 255, 0, 0.8);
+    display: flex;
+    flex-direction: column;
 }
 
-.messageDestinataire {
-    color: pink;
-    text-align: left;
+.form {
+    display: flex;
+    flex-direction: column;
 }
 
-.messageUtilisateur {
-    color: blue;
-    text-align: right;
+.formConnexion {
+    border: 4px solid #000000;
+    padding: 100px;
+    border-radius: 20px;
+    display: flex;
+    flex-direction: column;
+}
+
+input,
+button {
+    padding: 20px;
+    margin: 10px;
+}
+
+h2 {
+    font-size: 40px;
+}
+
+.formInfo {
+    margin-top: 20px;
+    padding: 20px;
+    border: 3px solid black;
+    box-shadow: 0 0 5px black;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    animation: none;
+    text-align: justify;
+    text-align: center;
+    width: 80%;
+    height: auto;
+    padding: 10px;
+    border-radius: 10px;
+    background-color: rgba(0, 0, 0, 0.5);
+    width: 50%;
+    margin-bottom: 15px;
+    color: white;
+}
+
+.formInfo a {
+    text-decoration: none;
+    color: white;
+    font-size: 1.5em;
+    transition: 0.5s;
+}
+
+.formInfo a:hover {
+    text-shadow: 0 0 10px red;
+}
+
+.formInfo p {
+    width: 80%;
+    opacity: 1;
+    text-align: justify;
+    text-shadow: 1px 1px #555555, -1px 1px #555555, 1px -1px #555555, -1px -1px #555555, 1px 1px 5px #555555;
+    font-size: 1.2em;
+    color: white;
+}
+
+.formInfo p:nth-child(1),
+.formInfo p:nth-child(2) {
+    animation: appear 5s 1 backwards;
 }

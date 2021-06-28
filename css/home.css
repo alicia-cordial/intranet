@@ -1,0 +1,14 @@
+.mainHome {
+    background-image: url(../images/blueprint-4056027_1920.jpg);
+    min-height: 100vh;
+    background-attachment: fixed;
+}
+
+.intro {
+    font-size: 80px;
+    text-align: center;
+    margin: 20px;
+    font-weight: bold;
+    color: white;
+    text-shadow: 2px 2px 2px gray;
+}

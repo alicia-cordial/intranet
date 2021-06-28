@@ -1,9 +1,9 @@
-<main id="mainCompte">
+<main id="mainCompte" class="compte">
     <article>
         <h2>CONNEXION</h2>
     </article>
     <article class="form">
-        <form id="formConnexion">
+        <form id="formConnexion" class="formConnexion">
             <div class="formBloc" id="bloc1">
                 <input type="text" id="login" name="login" placeholder="email ou identifiant">
             </div>
