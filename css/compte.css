@@ -1,15 +1,19 @@
 .compte {
-    background: rgba(255, 255, 0, 0.8);
+    background-color: rgba(255, 255, 0, 0.8);
     display: flex;
     flex-direction: column;
 }
+
+
+/******************FORMULAIRE***************************************/
 
 .form {
     display: flex;
     flex-direction: column;
 }
 
-.formConnexion {
+.formConnexion,
+#formInscription {
     border: 4px solid #000000;
     padding: 100px;
     border-radius: 20px;
@@ -19,9 +23,12 @@
 
 .formUpdateUser input,
 .formConnexion input,
+#formInscription input,
 button {
     padding: 20px;
     margin: 10px;
+    border: none;
+    border-bottom-style: solid;
 }
 
 h2 {
@@ -68,6 +75,36 @@ h2 {
     animation: appear 5s 1 backwards;
 }
 
+#formInscription {
+    text-align: center;
+    background-color: white;
+}
+
+@media (max-width: 1000px) {
+    form {
+        font-size: 30px;
+    }
+    h2 {
+        font-size: 35px;
+    }
+    .formConnexion,
+    #formInscription {
+        border: 4px solid #000000;
+        padding: 60px;
+        border-radius: 20px;
+        display: flex;
+        flex-direction: column;
+        text-align: center;
+    }
+    .formInfo a,
+    .formInfo p {
+        display: flex;
+        flex-direction: column;
+        text-align: center;
+        font-size: 1.2em;
+    }
+}
+
 
 /*********************************INDEX****************************************************/
 
@@ -86,6 +123,31 @@ h2 {
 .indexUser li {
     list-style: none;
     padding-right: 20px;
+}
+
+.li1,
+.li2 {
+    display: flex;
+    flex-direction: row;
+}
+
+@media (max-width: 1000px) {
+    .Userindex h2 {
+        font-size: 25px;
+        margin-bottom: 20px;
+    }
+    .indexUser {
+        display: flex;
+        flex-direction: column;
+    }
+    .li1,
+    .li2 {
+        display: flex;
+        flex-direction: row;
+    }
+    .li2 {
+        justify-content: center;
+    }
 }
 
 

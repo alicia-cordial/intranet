@@ -4,6 +4,7 @@ $(document).ready(function() {
     /*AJOUT MESSAGE*/
     $('body').on('submit', '#formMessagerie', function(e) {
         e.preventDefault();
+
         $.post(
             'API/apiMessagerie.php', {
                 action: 'sendNewMessage',
@@ -11,11 +12,13 @@ $(document).ready(function() {
                 contenu: $('#contenu').val()
             },
             function(idMessage) {
+
                 $.post(
                     'API/apiMessagerie.php', {
                         action: "displayMessage",
                         idMessage: idMessage
                     },
+
                     function(resultat) {
                         let data = JSON.parse(resultat);
 
@@ -30,8 +33,10 @@ $(document).ready(function() {
                         }
                     }
 
+
                 )
             },
+
 
         )
     });

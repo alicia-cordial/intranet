@@ -21,10 +21,8 @@ $(document).ready(function() {
                         $('#toDoList').append("<li class='liTask' id='" + data.id + "'>" +
                             "<input class='liTaskTitle' readOnly='readonly' value='" + data.titre + "'</li>");
                         $('#titleTask').val('');
-                        /*setTimeout(
-                            function() {
-                                $("#mainCompte").load(location.href + "#mainCompte")
-                            }, 1000);*/
+
+
                     }
 
                 )

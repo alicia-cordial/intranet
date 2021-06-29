@@ -1,14 +1,16 @@
+
 <main id="mainCompte">
+
+
     <article>
         <h2>INSCRIPTION</h2>
     </article>
     <article class="form">
         <form id="formInscription">
             <div class="formBloc" id="bloc1">
-                <p>Vous êtes...</p>
                 
                 <input type="text" id="login" name="login" placeholder="identifiant">
-                <input type="email" id="email" name="email" placeholder="email">
+                <input type="text" id="email" name="email" placeholder="email">
             </div>
 
             <div class="formBloc" id="bloc2">
@@ -18,7 +20,7 @@
             </div>
 
             <div class="formBloc" id="bloc3">
-                <button type="submit">S'inscrire</button>
+                <button type="submit">Inscrire une nouvelle personne</button>
             </div>
         </form>
 
@@ -28,3 +30,4 @@
     </article>
   
 </main>
+

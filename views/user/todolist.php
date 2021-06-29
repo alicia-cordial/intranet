@@ -92,4 +92,12 @@ btn.onclick = function() {
 span.onclick = function() {
     modal.style.display = "none";
 }
+
+/*
+var auto_refresh = setInterval(
+function ()
+{
+   $('#listTodo').load('#sectionVendeur');
+}, 10000); // refresh every 10000 milliseconds
+*/
 </script>

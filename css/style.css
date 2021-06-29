@@ -81,3 +81,9 @@ footer {
     z-index: 1;
     top: 0;
 }
+
+@media (max-width: 1000px) {
+    header a {
+        font-size: 30px;
+    }
+}

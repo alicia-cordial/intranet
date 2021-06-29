@@ -86,5 +86,11 @@ span.onclick = function() {
 }
 
 
+/*var auto_refresh = setInterval(
+function ()
+{
+   $('#myBtn').load(' #myBtn');
+}, 10000); // refresh every 10000 milliseconds*/
+
 </script>
 

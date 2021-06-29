@@ -7,19 +7,24 @@
         <h3></h3>
     </section>
 
+
         <ul class=indexUser>
+            <div class="li1">
             <li class="navUser" id="navUpdateProfil"><img src="images/profil.png" alt="profil"></li>
             <li class="navUser" id="navMessagerie"><img src="images/messagerie.png" alt="messagerie"></li>
             <li class="navUser" id="navTdl"><img src="images/tdl.png" alt="tdl"></li>
             <li class="navUser" id="navAgenda"><img src="images/calendier.png" alt="calendrier"></li>
-            
-            <?php if ($_SESSION['user']['status'] == 1) : ?>
-            <li class="navUser" id="navUsers">Gérer les utilisateurs</li>
-            <p>Ajoutez des nouvelles personnes <span class="callForm" id="callFormInscription">Inscrivez de nouvelles personnes.</span></p>
-            <li class="navUser" id="navEvent">Ajouter des évènements</li>
+            </div>
 
+            <div class="li2">
+            <?php if ($_SESSION['user']['status'] == 1) : ?>
+            <li class="navUser" id="navUsers"><img src="images/groupe.png" alt="groupe"></li>
+            <li class="navUser" id="navEvent"><img src="images/calendrier.png" alt="evenement"></li>
+            </div>
                 <?php endif; ?>
         </ul>
+
+
     </article>
 
 
