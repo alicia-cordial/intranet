@@ -34,8 +34,8 @@ if (empty($_SESSION)) {
         </ul>
 
         
-        <form method="post" id='formTodo'>
-            <input type="text" id="userId" hidden value="<?= $_SESSION['user']['id'] ?>">
+        <form id='formTodo'>
+            <input type="text" id="idUser" hidden value="<?= $_SESSION['user']['id'] ?>">
             <input type="text" id="titleTask" placeholder="Ajouter une tache">
             <button type="submit" class="addTask"> +</button>
         </form>

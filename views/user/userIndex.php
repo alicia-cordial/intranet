@@ -1,4 +1,5 @@
 
+
 <main id="mainCompte" class="Userindex">
     <article>
     <h2><?= $_SESSION['user']['identifiant'] ?></h2>
@@ -6,8 +7,12 @@
         <section id="sectionVendeur">
         <h3></h3>
     </section>
+<!--
+    <meteo-widget dark units="metric" lang="fr" city="Toulouse"></meteo-widget>
+    <meteo-widget units="fahrenheit" lang="en" city="New York"></meteo-widget>
+    <meteo-widget dark city="Lyon"></meteo-widget>
 
-
+-->
         <ul class=indexUser>
             <div class="li1">
             <li class="navUser" id="navUpdateProfil"><img src="images/profil.png" alt="profil"></li>

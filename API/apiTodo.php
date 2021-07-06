@@ -8,9 +8,9 @@ $model = new UserModel();
 /*CREATION TACHE*/
 if (isset($_POST['action']) && ($_POST['action'] === 'createTask')) {
     if (!empty($_POST['titleTask'])) {
-        $userId = htmlspecialchars($_POST['userId']);
+        $idUser = htmlspecialchars($_POST['idUser']);
         $titleTask = htmlspecialchars($_POST['titleTask']);
-        $idTask = $model->insertTask($userId, $titleTask);
+        $idTask = $model->insertTask($idUser, $titleTask);
         echo json_encode($idTask, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
     }
 }

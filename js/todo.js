@@ -7,7 +7,7 @@ $(document).ready(function() {
         $.post(
             'API/apiTodo.php', {
                 action: 'createTask',
-                userId: $('#userId').val(),
+                idUser: $('#idUser').val(),
                 titleTask: $('#titleTask').val()
             },
             function(idTask) {

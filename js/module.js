@@ -45,6 +45,48 @@ $(document).ready(function() {
         );
     });
 
+    /*PHOTO PERSONNE*/
+    $('body').on('click', '.uploadPic', function(event) {
+        let button = $(this)
+        console.log($(this))
+        $('#messageFile').empty()
+        var fd = new FormData();
+        var files = $('#file')[0].files;
+        if (button.is('uploadPicUpdate')) {
+            var action = "update"
+        } else if (button.is('uploadPicNew')) {
+            var action = "updateProfile"
+        }
+        var src = button.attr('value')
+
+        // Check file selected or not
+        if (files.length > 0) {
+            fd.append('file', files[0]);
+            fd.append('action', action);
+            fd.append('src', src);
+
+            $.ajax({
+                url: 'API/apiModule.php',
+                type: 'post',
+                data: fd,
+                contentType: false,
+                processData: false,
+                success: function(response) {
+                    console.log(response)
+                    if (response != 0) {
+                        d = new Date();
+                        $(".preview").css("background-image", "url('img/articles/" + response + '?' + d.getTime() + "')")
+                        button.attr('value', response)
+                    } else {
+                        $('#messageFile').html("Le fichier ne s'est pas envoyé")
+                    }
+                },
+            });
+        } else {
+            $('#messageFile').html("Sélectionnez un fichier SVP");
+        }
+    });
+
     /*CONNEXION*/
     //Display 2d block
     $('body').on('click', '#login', function() {
