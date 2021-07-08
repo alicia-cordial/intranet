@@ -13,6 +13,18 @@ class AdminModel extends Database
         return $users;
     }
 
+
+    public function countTdl($tdl)
+    {
+        if ($_SESSION['user']['status'] == '1') {
+            $request = $this->pdo->prepare("SELECT COUNT(todolist.id) FROM todolist INNER JOIN utilisateur ON utilisateur.id = todolist.id_utilisateur WHERE  utilisateur.status ='0'");
+            $request->execute([$tdl]);
+        }
+        $tdls = $request->fetchAll(PDO::FETCH_ASSOC);
+        return $tdls;
+    }
+
+
     public function deleteUser($id)
     {
         $request = $this->pdo->prepare("UPDATE utilisateur SET identifiant = 'utilisateur.ice supprimé', status ='supprimé', mail = '', mdp = '', zip = '0' WHERE id = ? ");

@@ -13,6 +13,13 @@ if (isset($_POST['action']) && $_POST['action'] === 'showUsers') {
     }
 }
 
+if (isset($_POST['action']) && $_POST['action'] === 'countTdl') {
+    $tdls = $model->countTdl($_POST['tdl']);
+    if (!empty($tdls)) {
+        echo json_encode($tdls, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
+    }
+}
+
 if (isset($_POST['action']) && $_POST['action'] === 'deleteUser') {
     $suppr = $model->deleteUser($_POST['id']);
     if ($suppr) {

@@ -34,7 +34,31 @@ $(document).ready(function() {
         )
     })
 
-    //BOUTON SUPPRIMER user
+    $('body').on('click', '.showTdls', function() {
+            let tdl = $(this).attr('value');
+            $('#listeTdlTries').empty()
+            console.log(choice)
+            $.post(
+                'API/apiAdmin.php', {
+                    action: 'countTdl',
+                    tdl: tdl
+                },
+                function(data) {
+                    console.log(data);
+                    let tdls = JSON.parse(data);
+                    if (tdls === 'none') {
+                        $('#listeTdlTries').append("<p>Rien</p>")
+                    } else {
+                        for (let tdl of tdls) {
+
+                            $('#listeTdlTries').append("<tr value='" + tdl.identifiant + "' id='" + tdl.id + "'><td>" + tdl.identifiant + "</td><td>" + tdl.titre + "</td></tr>")
+
+                        }
+                    }
+                }
+            )
+        })
+        //BOUTON SUPPRIMER user
     $('body').on('click', '.deleteUser', function() {
         let row = $(this).parents('tr')
         let idUser = row.attr('id')

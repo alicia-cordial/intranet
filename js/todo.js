@@ -7,7 +7,7 @@ $(document).ready(function() {
         $.post(
             'API/apiTodo.php', {
                 action: 'createTask',
-                idUser: $('#idUser').val(),
+                userId: $('#userId').val(),
                 titleTask: $('#titleTask').val()
             },
             function(idTask) {
@@ -21,7 +21,6 @@ $(document).ready(function() {
                         $('#toDoList').append("<li class='liTask' id='" + data.id + "'>" +
                             "<input class='liTaskTitle' readOnly='readonly' value='" + data.titre + "'</li>");
                         $('#titleTask').val('');
-
 
                     }
 

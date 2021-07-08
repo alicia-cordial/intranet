@@ -22,6 +22,15 @@
 
 </article>
 
+<h3>MODERATION</h3>
+<div>
+        <p class="showTdls" value="">Tous</p>
+    </div>
+    <article id="listeTdlTries">
+
+</article>
+
+
 <article id="infoAdmin">
 
 </article>
