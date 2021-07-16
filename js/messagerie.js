@@ -1,27 +1,28 @@
 $(document).ready(function() {
 
 
+
         /*AJOUT MESSAGE*/
 
 
         $('body').on('submit', '#formMessagerie', function(event) {
             event.preventDefault(); // empecher reload
-            console.log($('#contenu').val()),
-                $.post(
-                    'API/apiMessagerie.php', {
-                        action: 'sendNewMessage',
-                        contenu: $('#contenu').val()
-                    },
+            //console.log($('#idUser').attr('value')),
+            $.post(
+                'API/apiMessagerie.php', {
+                    action: 'sendNewMessage',
+                    contenu: $('#contenu').val(),
+                    idUser: $('#idUser').attr('value')
+                },
 
-
-                    function(result) {
-                        console.log(result);
-                        let message = JSON.parse(result);
-                        $('#contenu').val('')
-                        $('#infoMessage').append("<p>Message envoyé !</p>")
-                        $('#listeMessages').append("<tr value='" + message.identifiant + "' id='" + message.id + "'><td>" + message.identifiant + "</td><br/><br/><td>" + message.date + "</td><br/><br/><td class='contenuInput'>" + message.contenu + "</td></tr><br/>")
-                    }
-                );
+                function(result) {
+                    console.log(result);
+                    let message = JSON.parse(result);
+                    $('#contenu').val('')
+                        //$('#infoMessage').append("<p>Message envoyé !</p>")
+                    $('#listeMessages').append("<tr value='" + message.identifiant + "' id='" + message.id + "'><td>" + message.identifiant + "</td><br/><br/><td>" + message.date + "</td><br/><br/><td class='contenuInput'>" + message.contenu + "</td></tr><br/>")
+                }
+            );
         });
 
 
@@ -76,6 +77,7 @@ $(document).ready(function() {
                 }
             )
         })
+
 
 
 

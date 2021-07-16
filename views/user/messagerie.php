@@ -22,9 +22,6 @@ if (empty($_SESSION)) {
  
  
   <section id="tableLists">
- 
-  
-
 
     <div>
         <p class="messagerie" value="">Tous</p>
@@ -87,8 +84,13 @@ span.onclick = function() {
 }
 
 
-    
-
+$(window).scroll(function(){
+        if($(window).scrollTop() + $(window).height() > $(document).height() - 100) {
+            $('.s3cc-fixed').css('position','static');
+        }else{
+            $('.s3cc-fixed').css('position','fixed');
+        }
+    });
 </script>
 
 

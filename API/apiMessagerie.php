@@ -1,16 +1,26 @@
 <?php
-session_start();
+
 require_once('../models/Database.php');
 require_once('../models/UserModel.php');
 $model = new UserModel();
 
-
+session_start();
 
 if (isset($_POST['action']) && $_POST['action'] === 'sendNewMessage') {
-    $message = $model->sendNewMessage($_SESSION['user']['id'], htmlspecialchars($_POST['contenu']));
-    if(!empty($message)){
+
+
+   // (int)$idUser = htmlspecialchars($_POST['idUser']);
+    $idUser = (int)$_POST['idUser'];
+    $contenu = htmlspecialchars($_POST['contenu']);
+
+   // var_dump($idUser);
+    //var_dump($contenu);
+
+    $message = $model->sendNewMessage($idUser, $contenu);
+  
+
     echo json_encode($message, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
-    }
+  
 }
 
 

@@ -71,7 +71,7 @@ class UserModel extends Database
     public function selectMessages($choice)
     {
        
-        $request = $this->pdo->prepare("SELECT *, DATE_FORMAT(date, '%d%m%Y') as shortday, DATE_FORMAT(date, '%b %d, %Y') as day,  DATE_FORMAT(date, '%h:%i %p') as time FROM `message` INNER JOIN utilisateur ON utilisateur.id = message.id_utilisateur ORDER BY date ASC");
+        $request = $this->pdo->prepare("SELECT * FROM `message` INNER JOIN utilisateur ON utilisateur.id = message.id_utilisateur ORDER BY date ASC");
             $request->execute([$choice]);
         
         $messages = $request->fetchAll(PDO::FETCH_ASSOC);
@@ -84,26 +84,13 @@ class UserModel extends Database
         $request = $this->pdo->prepare("INSERT INTO `message` (id_utilisateur, contenu) VALUES (?, ?)");
         $request->execute([$idUser, $contenu]);
         $idMessage = $this->pdo->lastInsertId();
-        $request2 = $this->pdo->prepare("SELECT *  FROM `message` INNER JOIN utilisateur ON utilisateur.id = message.id_utilisateur WHERE `message`.id = ?");
+        $request2 = $this->pdo->prepare("SELECT *  FROM `message` INNER JOIN utilisateur ON utilisateur.id = message.id_utilisateur WHERE message.id = ? ");
         $request2->execute([$idMessage]);
         $message = $request2->fetch(PDO::FETCH_ASSOC);
         return $message;
     } 
 
  
-   
-
-
-    public function allUsers($choice)
-    {
-       
-            $request = $this->pdo->prepare("SELECT * FROM utilisateur ");
-            $request->execute([$choice]);
-        
-        $users = $request->fetchAll(PDO::FETCH_ASSOC);
-        return $users;
-    }
-
     /***************TODOLIST***************/
 
     public function insertTask($idUser, $titleTask)
@@ -175,22 +162,5 @@ class UserModel extends Database
 }
 //////
 //$model = new UserModel();
-//echo '<pre>';
-//var_dump($model->sendNewMessage('2', 'LALA!!'));
-//echo '</pre>';
-//echo '<pre>';
-//var_dump($model->selectMessages('2'));
-//echo '</pre>';
-//var_dump($model->addMessage('HELP', '1'));
-//
-//var_dump($model->sendNewMessage('4', '3', 'lala'));
 
-//var_dump($model->selectMessagesConversation());
-
-//////var_dump($model->selectMessagesConversation('2', '1'));
-////$userExists = $model->userExists('may5', 'may5');
-////var_dump($userExists);
-////if($model->userIsAvailable('may@hotmail.fr', 'may', '1')) echo "no";
-//var_dump($model->userIsAvailable('may@may2.fr', 'may3', '2'));
-//var_dump($model->userIsAvailable('may@may.fr', 'may1', '2'));
-//var_dump($model->insertArticleAModerer('lala', 'lala', '40', 'bon état', 'non', 'kakak', '1', '0'));
+//var_dump($model->sendNewMessage('1', 'FUCK'));
