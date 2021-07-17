@@ -9,7 +9,7 @@ $(document).ready(function() {
     })
 
 
-    $('body').on('click', '.showUsers', function() {
+    $('body').on('click', '.gestionUsers', '.showUsers', function() {
         let choice = $(this).attr('value');
         $('#listeUsersTries').empty()
         console.log(choice)

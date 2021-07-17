@@ -1,7 +1,7 @@
 
 <main id="mainCompte">
 
-
+<p class="containerContactUser"><a class='Inscription' href='#ex1' rel='modal:open'></a></p>
     <article>
         <h2>INSCRIPTION</h2>
     </article>

@@ -21,6 +21,11 @@
     flex-direction: column;
 }
 
+.formBloc {
+    display: flex;
+    flex-direction: column;
+}
+
 .formUpdateUser input,
 .formConnexion input,
 #formInscription input,
@@ -44,11 +49,13 @@ h2 {
     box-shadow: 0 0 5px black;
     border-radius: 10px;
     animation: none;
-    width: 80%;
+    width: 100%;
     height: auto;
     background-color: rgba(0, 0, 0, 0.5);
     margin-bottom: 15px;
     color: white;
+    text-align: center;
+    align-items: center;
 }
 
 .formInfo a {
@@ -56,6 +63,7 @@ h2 {
     color: white;
     font-size: 1.5em;
     transition: 0.5s;
+    text-align: center;
 }
 
 .formInfo a:hover {
@@ -63,11 +71,12 @@ h2 {
 }
 
 .formInfo p {
-    width: 80%;
+    width: 100%;
     opacity: 1;
     text-shadow: 1px 1px #555555, -1px 1px #555555, 1px -1px #555555, -1px -1px #555555, 1px 1px 5px #555555;
     font-size: 1.2em;
     color: white;
+    text-align: center;
 }
 
 .formInfo p:nth-child(1),
@@ -274,3 +283,26 @@ tr {
 
 
 /*******************GESTION UTILISATEURS***************************************************/
+
+.modal a.close-modal {
+    display: none;
+    position: relative;
+    border-radius: 0px;
+}
+
+
+/*MODALE */
+
+.modal {
+    margin-top: 10px;
+    z-index: 100 !important;
+    display: none;
+    font-size: 80%;
+    overflow-y: auto;
+    overflow-x: auto;
+    left: 0;
+    max-width: 80%;
+    max-height: 90%;
+    top: 0;
+    border-radius: 0px;
+}

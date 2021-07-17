@@ -27,7 +27,7 @@ $(document).ready(function() {
 
 
 
-        $('body').on('click', '.messagerie', function(e) {
+        $('body').on('click', '.Messagerie', function(e) {
             e.preventDefault(); // empecher reload
             let choice = $(this).attr('value');
             $('#listeMessages').empty()

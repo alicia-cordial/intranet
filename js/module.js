@@ -19,7 +19,7 @@ $(document).ready(function() {
     });
 
     //Submit inscription
-    $('body').on('submit', '#formInscription', function(event) {
+    $('body').on('submit', '.Inscription', '#formInscription', function(event) {
         $('#message').empty();
         event.preventDefault()
         $.post(

@@ -15,16 +15,16 @@
 -->
         <ul class=indexUser>
             <div class="li1">
-            <li class="navUser" id="navUpdateProfil"><img src="images/profil.png" alt="profil"></li>
-            <li class="navUser" id="navMessagerie"><img src="images/messagerie.png" alt="messagerie"></li>
-            <li class="navUser" id="navTdl"><img src="images/tdl.png" alt="tdl"></li>
-            <li class="navUser" id="navAgenda"><img src="images/calendier.png" alt="calendrier"></li>
+            <li class="navUser" id="navUpdateProfil"><a href='#ex1' rel='modal:open'><img src="images/profil.png" alt="profil"></a></li>
+            <li class="navUser" id="navMessagerie"><a href='#ex1' rel='modal:open'><img src="images/messagerie.png" alt="messagerie"></a></li>
+            <li class="navUser" id="navTdl"><a href='#ex1' rel='modal:open'><img src="images/tdl.png" alt="tdl"></a></li>
+            <li class="navUser" id="navAgenda"><a href='#ex1' rel='modal:open'><img src="images/calendier.png" alt="calendrier"></a><li>
             </div>
 
             <div class="li2">
             <?php if ($_SESSION['user']['status'] == 1) : ?>
-            <li class="navUser" id="navUsers"><img src="images/groupe.png" alt="groupe"></li>
-            <li class="navUser" id="navEvent"><img src="images/calendrier.png" alt="evenement"></li>
+            <li class="navUser" id="navUsers"><a href='#ex1' rel='modal:open'><img src="images/groupe.png" alt="groupe"></a></li>
+            <li class="navUser" id="navEvent"><a href='#ex1' rel='modal:open'><img src="images/calendrier.png" alt="evenement"></a></li>
             </div>
                 <?php endif; ?>
         </ul>

@@ -12,13 +12,9 @@ if (empty($_SESSION)) {
 
 <section id="sectionVendeur" class="sectionTdl">
 
-<button id="myBtn"> To do list</button>
-    <!-- The Modal -->
-<div id="myModal" class="modal">
+<div>
 
-<!-- Modal content -->
-<div class="modal-content" id="modal-content">
-  <span class="close">&times;</span>
+<p class="containerContactUser"><a class='TODOLIST white-text ' href='#ex1' rel='modal:open'></a></p>
 
     <section id="tableLists">
 
@@ -69,35 +65,6 @@ if (empty($_SESSION)) {
     </article>
     </section>
 
+            </div>
+
 </section>
-
-<script>
-
-
-// Get the modal
-var modal = document.getElementById("myModal");
-
-// Get the button that opens the modal
-var btn = document.getElementById("myBtn");
-
-// Get the <span> element that closes the modal
-var span = document.getElementsByClassName("close")[0];
-
-// When the user clicks on the button, open the modal
-btn.onclick = function() {
-    modal.style.display = "block";
-}
-
-// When the user clicks on <span> (x), close the modal
-span.onclick = function() {
-    modal.style.display = "none";
-}
-
-/*
-var auto_refresh = setInterval(
-function ()
-{
-   $('#listTodo').load('#sectionVendeur');
-}, 10000); // refresh every 10000 milliseconds
-*/
-</script>

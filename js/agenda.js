@@ -10,9 +10,7 @@
  * For event resizing, requires jQuery UI resizable.
  */
 $(document).ready(function() {
-
-    (function($, undefined) {
-
+    $('body').on('click', '.Agenda', (function($, undefined) {
 
         ;;
 
@@ -6083,5 +6081,5 @@ $(document).ready(function() {
 
         ;;
 
-    })(jQuery);
+    })(jQuery));
 });
