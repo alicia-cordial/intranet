@@ -3,7 +3,11 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description"  content="">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="author" content="Alicia Cordial">
+    <meta name="description" content="Jacquiod Entreprise est une entreprise d'électricité dans l'Ain à Priay">
+    <meta name="Jacquiod Électricité content='index,follow'">
+    <link rel="short icon" href="images/icons8-symbole-de-fusible-48.png"/>
     <title> Jacquiod Ent | <?= $title ?></title>
     <link  rel="stylesheet" type="text/css" href="css/style.css">
 
