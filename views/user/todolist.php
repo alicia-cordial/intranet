@@ -19,7 +19,7 @@ if (empty($_SESSION)) {
     <section id="tableLists">
 
     <article class="list" id="listTodo">
-        <h3>Taches a faire</h3>
+        <h3>Taches à faire</h3>
         <ul id="toDoList" class="listAFaire">
             <?php foreach ($tasksUser['toDo'] as $key => $task) : ?>
                 <li class="liTask" id="<?= $task['id'] ?>">

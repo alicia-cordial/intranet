@@ -26,7 +26,7 @@ $(document).ready(function() {
                 } else {
                     for (let user of users) {
 
-                        $('#listeUsersTries').append("<tr value='" + user.identifiant + "' id='" + user.id + "'><td>" + user.identifiant + "</td><td>" + user.status + "</td><td><button class='deleteUser'>Supprimer</button></td></tr>")
+                        $('#listeUsersTries').append("<tr value='" + user.identifiant + "' id='" + user.id + "'><td class='utilisateurs'>" + user.identifiant + "</td><td><button class='deleteUser'>Supprimer</button></td></tr>")
 
                     }
                 }

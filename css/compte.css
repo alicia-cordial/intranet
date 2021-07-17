@@ -4,6 +4,10 @@
     flex-direction: column;
 }
 
+img:hover {
+    opacity: 0.3;
+}
+
 
 /******************FORMULAIRE***************************************/
 
@@ -110,6 +114,9 @@ h2 {
         display: flex;
         flex-direction: column;
         text-align: center;
+        font-size: 1.2em;
+    }
+    .formUpdateUser {
         font-size: 1.2em;
     }
 }
@@ -279,26 +286,96 @@ tr {
 
 #tableLists {
     display: flex;
-    flex-direction: column;
-    padding: 20px;
+    flex-direction: row;
     justify-content: space-around;
 }
 
+@media (max-width: 1000px) {
+    #tableLists {
+        display: flex;
+        flex-direction: column;
+        padding: 20px;
+        justify-content: space-around;
+    }
+    .list {
+        margin-bottom: 20px;
+    }
+    .List h3 {
+        margin-bottom: 10px;
+    }
+}
+
 .list {
-    padding-bottom: 30px;
+    padding: 30px;
+    border: 3px solid black;
+    border-radius: 20px;
+    margin-right: 40px;
+    border-radius: 10px;
+    background-color: lemonchiffon;
+}
+
+.List h3 {
+    font-size: 30px;
+}
+
+.liTaskTitle,
+#formTodo input {
+    font-size: 20px;
+    background-color: lemonchiffon;
+}
+
+#formTodo {
+    display: flex;
+    flex-direction: column;
 }
 
 
 /*******************GESTION UTILISATEURS***************************************************/
+
+#listeUsersTries {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+}
+
+#listeUsersTries tr {
+    display: flex;
+    flex-direction: row;
+    display: inline-block;
+    vertical-align: middle;
+    justify-content: space-around;
+}
+
+.utilisateurs {
+    font-size: 20px;
+    text-align: left;
+}
+
+.deleteUser {
+    font-size: 20px;
+    text-align: right;
+}
+
+.callForm {
+    text-decoration: none;
+    color: black;
+    font-size: 20px;
+}
+
+.callForm:hover {
+    text-decoration: none;
+    color: blue;
+    font-size: 20px;
+}
+
+
+/*************************************************MODALE *****************************************/
 
 .modal a.close-modal {
     display: none;
     position: relative;
     border-radius: 0px;
 }
-
-
-/*MODALE */
 
 .modal {
     margin-top: 10px;
@@ -321,4 +398,12 @@ tr {
     padding: 150px;
     margin-top: 40px;
     margin-bottom: 40px;
+}
+
+@media (max-width: 1000px) {
+    .container {
+        background-color: rgba(165, 199, 250, 0.6);
+        border: 2px solid black;
+        border-radius: 20px;
+    }
 }

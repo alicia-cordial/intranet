@@ -37,12 +37,8 @@ class UserModel extends Database
 
     public function insertUser($login, $email, $hashedpassword)
     {
-        $request = $this->pdo->prepare("INSERT INTO utilisateur (identifiant, mdp, mail) VALUES (:identifiant, :password, :email)");
-        $insert = $request->execute(array(
-            ':email' => $email,
-            ':password' => $hashedpassword,
-            ':identifiant' => $login
-        ));
+        $request = $this->pdo->prepare("INSERT INTO utilisateur (identifiant, mail,  mdp) VALUES (?, ?, ?)");
+        $insert = $request->execute([$login, $email, $hashedpassword]);
         return $insert;
     }
     public function updateUser($login, $email, $hashedpassword, $id)
@@ -163,4 +159,4 @@ class UserModel extends Database
 //////
 //$model = new UserModel();
 
-//var_dump($model->sendNewMessage('1', 'FUCK'));
+//var_dump($model->insertUser('lolo', 'lol@gl', 'lolo'));

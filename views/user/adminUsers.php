@@ -22,7 +22,7 @@
 
 </article>
 
-<p><a href='#ex1' rel='modal:open'> + <span class="callForm" id="callFormInscription">Inscrivez de nouvelles personnes.</span></a></p>
+<a href='#ex1' rel='modal:open'> <span class="callForm" id="callFormInscription">Inscrivez de nouvelles personnes.</span></a>
 
 </div>
 
