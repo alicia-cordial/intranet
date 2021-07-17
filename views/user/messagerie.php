@@ -14,7 +14,7 @@ if (empty($_SESSION)) {
 
 
 
-<div>
+<div class=container>
                 
     <p class="containerContactUser"><a class='Messagerie white-text ' href='#ex1' rel='modal:open'></a></p>
             

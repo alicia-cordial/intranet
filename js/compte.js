@@ -58,7 +58,7 @@ $(document).ready(function() {
 
 
     //Formulaire modification profil
-    $('body').on('submit', ".Update", '#formUpdateUser', function(event) {
+    $('body').on('submit', '#formUpdateUser', function(event) {
         $('#message').empty();
         event.preventDefault()
         $.post(

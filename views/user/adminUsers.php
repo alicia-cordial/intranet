@@ -1,6 +1,6 @@
 <section id="sectionVendeur">
 
-<div>
+<div class="container">
 <p class="containerContactUser"><a class='gestionUsers' href='#ex1' rel='modal:open'></a></p>
 
 <article>
@@ -22,7 +22,7 @@
 
 </article>
 
-<p>+ <a href='#ex1' rel='modal:open'><span class="callForm" id="callFormInscription">Inscrivez de nouvelles personnes.</span></a></p>
+<p><a href='#ex1' rel='modal:open'> + <span class="callForm" id="callFormInscription">Inscrivez de nouvelles personnes.</span></a></p>
 
 </div>
 

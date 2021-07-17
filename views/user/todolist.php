@@ -12,7 +12,7 @@ if (empty($_SESSION)) {
 
 <section id="sectionVendeur" class="sectionTdl">
 
-<div>
+<div class="container">
 
 <p class="containerContactUser"><a class='TODOLIST white-text ' href='#ex1' rel='modal:open'></a></p>
 

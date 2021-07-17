@@ -2,7 +2,7 @@ $(document).ready(function() {
     $('#archiveList').hide();
 
     /*AJOUT TACHE*/
-    $('body').on('submit', '.TODOLIST', '#formTodo', function(e) {
+    $('body').on('submit', '#formTodo', function(e) {
         e.preventDefault();
         $.post(
             'API/apiTodo.php', {

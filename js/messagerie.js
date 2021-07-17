@@ -20,14 +20,14 @@ $(document).ready(function() {
                     let message = JSON.parse(result);
                     $('#contenu').val('')
                         //$('#infoMessage').append("<p>Message envoyé !</p>")
-                    $('#listeMessages').append("<tr value='" + message.identifiant + "' id='" + message.id + "'><td>" + message.identifiant + "</td><br/><br/><td>" + message.date + "</td><br/><br/><td class='contenuInput'>" + message.contenu + "</td></tr><br/>")
+                    $('#listeMessages').append("<tr value='" + message.identifiant + "' id='" + message.id + "'><td>" + message.identifiant + "</td><br/><br/>><td class='contenuUser'>" + message.contenu + "</td><td>" + message.date + "</td><br/><br/</tr><br/>")
                 }
             );
         });
 
 
 
-        $('body').on('click', '.Messagerie', function(e) {
+        $('body').on('click', '.messagerie', function(e) {
             e.preventDefault(); // empecher reload
             let choice = $(this).attr('value');
             $('#listeMessages').empty()
@@ -45,7 +45,7 @@ $(document).ready(function() {
                     } else {
                         for (let message of messages) {
 
-                            $('#listeMessages').append("<tr value='" + message.identifiant + "' id='" + message.id + "'><td>" + message.identifiant + "</td><br/><br/><td>" + message.date + "</td><br/><br/><td class='contenuInput'>" + message.contenu + "</td></tr><br/>")
+                            $('#listeMessages').append("<tr value='" + message.identifiant + "' id='" + message.id + "'><td>" + message.identifiant + "</td><td class='contenuUsers'>" + message.contenu + "</td><td>" + message.date + "</td></tr><br/>")
 
                         }
                     }

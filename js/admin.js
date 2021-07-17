@@ -9,7 +9,7 @@ $(document).ready(function() {
     })
 
 
-    $('body').on('click', '.gestionUsers', '.showUsers', function() {
+    $('body').on('click', '.showUsers', function() {
         let choice = $(this).attr('value');
         $('#listeUsersTries').empty()
         console.log(choice)
@@ -34,31 +34,7 @@ $(document).ready(function() {
         )
     })
 
-    $('body').on('click', '.showTdls', function() {
-            let tdl = $(this).attr('value');
-            $('#listeTdlTries').empty()
-            console.log(choice)
-            $.post(
-                'API/apiAdmin.php', {
-                    action: 'countTdl',
-                    tdl: tdl
-                },
-                function(data) {
-                    console.log(data);
-                    let tdls = JSON.parse(data);
-                    if (tdls === 'none') {
-                        $('#listeTdlTries').append("<p>Rien</p>")
-                    } else {
-                        for (let tdl of tdls) {
-
-                            $('#listeTdlTries').append("<tr value='" + tdl.identifiant + "' id='" + tdl.id + "'><td>" + tdl.identifiant + "</td><td>" + tdl.titre + "</td></tr>")
-
-                        }
-                    }
-                }
-            )
-        })
-        //BOUTON SUPPRIMER user
+    //BOUTON SUPPRIMER user
     $('body').on('click', '.deleteUser', function() {
         let row = $(this).parents('tr')
         let idUser = row.attr('id')
