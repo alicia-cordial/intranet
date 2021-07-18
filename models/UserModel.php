@@ -80,7 +80,8 @@ class UserModel extends Database
         $request = $this->pdo->prepare("INSERT INTO `message` (id_utilisateur, contenu) VALUES (?, ?)");
         $request->execute([$idUser, $contenu]);
         $idMessage = $this->pdo->lastInsertId();
-        $request2 = $this->pdo->prepare("SELECT *  FROM `message` INNER JOIN utilisateur ON utilisateur.id = message.id_utilisateur WHERE message.id = ? ");
+        $request2 = $this->pdo->prepare("SELECT *, DATE_FORMAT(date, '%d%m%Y') as shortday, DATE_FORMAT(date, '%b %d, %Y') 
+        as day,  DATE_FORMAT(date, '%h:%i %p') as time  FROM `message` INNER JOIN utilisateur ON utilisateur.id = message.id_utilisateur WHERE message.id = ? ");
         $request2->execute([$idMessage]);
         $message = $request2->fetch(PDO::FETCH_ASSOC);
         return $message;
@@ -91,14 +92,24 @@ class UserModel extends Database
 
     public function insertTask($idUser, $titleTask)
     {
-        $request = $this->pdo->prepare("INSERT INTO todolist (`id_utilisateur`, `titre`, `description`) VALUES (:idUser, :title, :description)");
-        $insert = $request->execute(array(
-            ':idUser' => $idUser,
-            ':title' => $titleTask,
-            ':description' => ''));
+        $request = $this->pdo->prepare("INSERT INTO todolist (`id_utilisateur`, titre, description) VALUES (?, ?, '')");
+        $request->execute([$idUser, $titleTask]);
         $idTask = $this->pdo->lastInsertId();
         return $idTask;
     }
+
+/*
+    public function addTask($idUser, $titleTask)
+    {
+        $request = $this->pdo->prepare("INSERT INTO todolist (id_utilisateur, titre, description) VALUES (?, ?, '')");
+        $request->execute([$idUser, $titleTask]);
+        $idTask = $this->pdo->lastInsertId();
+        $request2 = $this->pdo->prepare("SELECT * FROM todolist INNER JOIN utilisateur ON utilisateur.id = todolist.id_utilisateur WHERE id = $idTask");
+        $request2->execute([$idTask]);
+        $message = $request2->fetch(PDO::FETCH_ASSOC);
+        return $message;
+    } 
+*/
 
     public function selectTask($idTask)
     {
@@ -157,6 +168,3 @@ class UserModel extends Database
     }
 }
 //////
-//$model = new UserModel();
-
-//var_dump($model->insertUser('lolo', 'lol@gl', 'lolo'));

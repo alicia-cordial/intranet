@@ -7,7 +7,7 @@ $(document).ready(function() {
         $.post(
             'API/apiTodo.php', {
                 action: 'createTask',
-                userId: $('#userId').val(),
+                idUser: $('#idUser').val(),
                 titleTask: $('#titleTask').val()
             },
             function(idTask) {
@@ -29,6 +29,29 @@ $(document).ready(function() {
 
         )
     });
+
+
+    /*
+        $('body').on('submit', '#formTodo', function(event) {
+            event.preventDefault(); // empecher reload
+            //console.log($('#idUser').attr('value')),
+            $.post(
+                'API/apiTodo.php', {
+                    action: 'addTask',
+                    titleTask: $('#titleTask').val(),
+                    idUser: $('#idUser').attr('value')
+                },
+
+                function(result) {
+                    console.log(result);
+                    let data = JSON.parse(result);
+                    $('#toDoList').append("<li class='liTask' id='" + data.id + "'>" +
+                        "<input class='liTaskTitle' readOnly='readonly' value='" + data.titre + "'</li>");
+                    $('#titleTask').val('');
+                }
+            );
+        });*/
+
 
     /*AFFICHAGE DETAILS D'UNE TACHE*/
     $('body').on('click', '.liTask', function() {

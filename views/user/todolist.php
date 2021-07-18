@@ -16,7 +16,7 @@ if (empty($_SESSION)) {
 
 <p class="containerContactUser"><a class='TODOLIST white-text ' href='#ex1' rel='modal:open'></a></p>
 
-    <section id="tableLists">
+    <section id="tableList">
 
     <article class="list" id="listTodo">
         <h3>Taches à faire</h3>
